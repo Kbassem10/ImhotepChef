@@ -1,1 +1,29 @@
+# Django
+*.pyc
+__pycache__/
+*.pyo
+*.pyd
+.Python
+db.sqlite3
+.env
+media/
+
+# Node.js
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.pnpm-debug.log*
+
+# Docker
+.docker/
+
+# IDE
 .vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
