@@ -1,0 +1,55 @@
+version: '3.8'
+
+services:
+  db:
+    image: postgres:15
+    environment:
+      POSTGRES_DB: imhotepchef_db
+      POSTGRES_USER: imhotepchef_user
+      POSTGRES_PASSWORD: imhotepchef_password
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    ports:
+      - "5430:5430"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U imhotepchef_user -d imhotepchef_db"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  backend:
+    build:
+      context: ./backend/ImhotepChef
+      dockerfile: Dockerfile
+    ports:
+      - "8000:8000"
+    environment:
+      - DEBUG=True
+      - DATABASE_NAME=imhotepchef_db
+      - DATABASE_USER=imhotepchef_user
+      - DATABASE_PASSWORD=imhotepchef_password
+      - DATABASE_HOST=db
+      - SECRET_KEY=dev-secret-key-not-for-production
+    volumes:
+      - ./backend/ImhotepChef:/app
+    depends_on:
+      db:
+        condition: service_healthy
+    command: python manage.py runserver 0.0.0.0:8000
+
+  frontend:
+    build:
+      context: ./frontend/ImhotepChef
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
+    environment:
+      - VITE_API_URL=http://localhost:8000
+    volumes:
+      - ./frontend/ImhotepChef:/app
+      - /app/node_modules
+    depends_on:
+      - backend
+
+volumes:
+  postgres_data:
