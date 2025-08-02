@@ -5,7 +5,7 @@ from rest_framework_simplejwt.views import (
     TokenVerifyView,
 )
 from . import views
-from .auth import register, login, logout
+from .auth import register, login, logout, google_auth
 
 router = DefaultRouter()
 # Add your viewsets here when you create them
@@ -20,4 +20,8 @@ urlpatterns = [
     path('auth/user/', views.user_view, name='user'),
     path('auth/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
     path('auth/token/verify/', TokenVerifyView.as_view(), name='token_verify'),
+    # Google OAuth endpoints
+    path('auth/google/url/', google_auth.google_login_url, name='google_login_url'),
+    path('auth/google/authenticate/', google_auth.google_auth, name='google_auth'),
+    path('auth/google/callback/', google_auth.google_callback, name='google_callback'),
 ]

@@ -267,13 +267,17 @@ LOGGING = {
 }
 
 # Add this configuration for Google OAuth
+GOOGLE_OAUTH2_CLIENT_ID = config('GOOGLE_CLIENT_ID', default='')
+GOOGLE_OAUTH2_CLIENT_SECRET = config('GOOGLE_CLIENT_SECRET', default='')
+
+# Update SOCIALACCOUNT_PROVIDERS configuration
 SOCIALACCOUNT_PROVIDERS = {
     'google': {
         'APP': {
-            'client_id': config('GOOGLE_CLIENT_ID', ''),
-            'secret': config('GOOGLE_CLIENT_SECRET', ''),
+            'client_id': GOOGLE_OAUTH2_CLIENT_ID,
+            'secret': GOOGLE_OAUTH2_CLIENT_SECRET,
         },
-        'REDIRECT_URI': f"{SITE_DOMAIN}/google/callback/",
+        'REDIRECT_URI': f"{SITE_DOMAIN}/api/auth/google/callback/",
         'SCOPE': ['profile', 'email'],
     }
 }

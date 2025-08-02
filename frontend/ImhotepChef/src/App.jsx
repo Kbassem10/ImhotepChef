@@ -6,6 +6,7 @@ import Login from './components/auth/Login'
 import Register from './components/auth/Register'
 import Dashboard from './components/Dashboard'
 import EmailVerification from './components/auth/EmailVerification'
+import GoogleCallback from './components/auth/GoogleCallback'
 import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
 import './App.css'
@@ -87,6 +88,7 @@ function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
           <Route path="/verify-email/:uid/:token" element={<EmailVerification />} />
+          <Route path="/auth/google/callback" element={<GoogleCallback />} />
           <Route 
             path="/dashboard" 
             element={
