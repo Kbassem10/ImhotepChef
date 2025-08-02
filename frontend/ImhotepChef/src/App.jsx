@@ -1,9 +1,15 @@
 import { useState, useEffect } from 'react'
+import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom'
+import { AuthProvider } from './contexts/AuthContext'
+import ProtectedRoute from './components/ProtectedRoute'
+import Login from './components/auth/Login'
+import Register from './components/auth/Register'
+import Dashboard from './components/Dashboard'
 import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
 import './App.css'
 
-function App() {
+function LandingPage() {
   const [count, setCount] = useState(0)
   const [isDarkMode, setIsDarkMode] = useState(() => {
     const saved = localStorage.getItem('darkMode');
@@ -60,7 +66,7 @@ function App() {
           count is {count}
         </button>
         <p className="card-text">
-          Edit <code className="code">src/App.jsx</code> and save to test HMR
+          Get started by <a href="/login" style={{ color: 'var(--button-bg)' }}>logging in</a> or <a href="/register" style={{ color: 'var(--button-bg)' }}>creating an account</a>
         </p>
       </div>
       
@@ -68,6 +74,29 @@ function App() {
         Click on the Vite and React logos to learn more
       </p>
     </div>
+  )
+}
+
+function App() {
+  return (
+    <AuthProvider>
+      <Router>
+        <Routes>
+          <Route path="/" element={<LandingPage />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/register" element={<Register />} />
+          <Route 
+            path="/dashboard" 
+            element={
+              <ProtectedRoute>
+                <Dashboard />
+              </ProtectedRoute>
+            } 
+          />
+          <Route path="*" element={<Navigate to="/" replace />} />
+        </Routes>
+      </Router>
+    </AuthProvider>
   )
 }
 
