@@ -12,7 +12,7 @@ A modern recipe management application built with Django REST Framework and Reac
 
 1. Clone the repository:
 ```bash
-git clone <repository-url>
+git clone https://github.com/Imhotep-Tech/ImhotepChef.git
 cd ImhotepChef
 ```
 
