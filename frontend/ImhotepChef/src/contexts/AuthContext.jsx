@@ -195,6 +195,53 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
+  const googleAuth = async (code) => {
+    try {
+      const response = await axios.post('/api/auth/google/authenticate/', {
+        code,
+      });
+      
+      const { access, refresh, user: userData, is_new_user } = response.data;
+      
+      // Store JWT tokens
+      localStorage.setItem('access_token', access);
+      localStorage.setItem('refresh_token', refresh);
+      setAccessToken(access);
+      setRefreshToken(refresh);
+      setUser(userData);
+      
+      return { 
+        success: true, 
+        isNewUser: is_new_user || false 
+      };
+    } catch (error) {
+      console.error('Google authentication failed:', error);
+      
+      let errorMessage = 'Google authentication failed';
+      
+      if (error.response?.data?.error) {
+        errorMessage = error.response.data.error;
+      } else if (error.response?.status === 500) {
+        errorMessage = 'Server error. Please try again later.';
+      }
+      
+      return { 
+        success: false, 
+        error: errorMessage
+      };
+    }
+  };
+
+  const getGoogleAuthUrl = async () => {
+    try {
+      const response = await axios.get('/api/auth/google/url/');
+      return response.data.auth_url;
+    } catch (error) {
+      console.error('Failed to get Google auth URL:', error);
+      throw error;
+    }
+  };
+
   const logout = async () => {
     try {
       // Call logout endpoint to blacklist the refresh token
@@ -222,6 +269,8 @@ export const AuthProvider = ({ children }) => {
     login,
     register,
     logout,
+    googleAuth,
+    getGoogleAuthUrl,
     loading,
     isAuthenticated: !!user,
   };
