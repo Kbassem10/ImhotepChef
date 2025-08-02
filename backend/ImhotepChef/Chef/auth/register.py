@@ -1,24 +1,14 @@
-#all of the auth related function
-from django.shortcuts import render, redirect
 from ..models import User
-from django.contrib import messages
-from django.contrib.auth import authenticate, login, logout, get_backends, get_user_model
-from django.contrib.auth.decorators import login_required
+from rest_framework import status
+from rest_framework.decorators import api_view, permission_classes
+from rest_framework.permissions import AllowAny
+from rest_framework.response import Response
 from django.core.mail import send_mail
-from django.urls import reverse
 from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 from django.utils.encoding import force_bytes, force_str
 from django.template.loader import render_to_string
 from django.contrib.auth.tokens import default_token_generator
-from django.contrib.auth.forms import PasswordResetForm, SetPasswordForm
-from django.contrib.auth.hashers import make_password
 from ImhotepChef.settings import SITE_DOMAIN
-from django.shortcuts import render
-from rest_framework import status
-from rest_framework.decorators import api_view, permission_classes
-from rest_framework.permissions import AllowAny, IsAuthenticated
-from rest_framework.response import Response
-from rest_framework.authtoken.models import Token
 from django.core.exceptions import ValidationError
 from django.contrib.auth.password_validation import validate_password
 

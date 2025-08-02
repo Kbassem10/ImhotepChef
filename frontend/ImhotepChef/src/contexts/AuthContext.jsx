@@ -18,35 +18,105 @@ export const useAuth = () => {
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
-  const [token, setToken] = useState(localStorage.getItem('token'));
+  const [accessToken, setAccessToken] = useState(localStorage.getItem('access_token'));
+  const [refreshToken, setRefreshToken] = useState(localStorage.getItem('refresh_token'));
 
   // Set auth token in axios headers
   useEffect(() => {
-    if (token) {
-      axios.defaults.headers.common['Authorization'] = `Token ${token}`;
+    if (accessToken) {
+      axios.defaults.headers.common['Authorization'] = `Bearer ${accessToken}`;
     } else {
       delete axios.defaults.headers.common['Authorization'];
     }
-  }, [token]);
+  }, [accessToken]);
+
+  // Function to refresh the access token
+  const refreshAccessToken = async () => {
+    try {
+      if (!refreshToken) {
+        throw new Error('No refresh token available');
+      }
+      
+      const response = await axios.post('/api/auth/token/refresh/', {
+        refresh: refreshToken,
+      });
+      
+      const newAccessToken = response.data.access;
+      const newRefreshToken = response.data.refresh || refreshToken; // Some implementations rotate refresh tokens
+      
+      localStorage.setItem('access_token', newAccessToken);
+      if (response.data.refresh) {
+        localStorage.setItem('refresh_token', newRefreshToken);
+        setRefreshToken(newRefreshToken);
+      }
+      setAccessToken(newAccessToken);
+      
+      return newAccessToken;
+    } catch (error) {
+      console.error('Token refresh failed:', error);
+      // If refresh fails, logout the user
+      logout();
+      throw error;
+    }
+  };
+
+  // Axios interceptor to handle token refresh
+  useEffect(() => {
+    const interceptor = axios.interceptors.response.use(
+      (response) => response,
+      async (error) => {
+        const originalRequest = error.config;
+        
+        if (error.response?.status === 401 && !originalRequest._retry && refreshToken) {
+          originalRequest._retry = true;
+          
+          try {
+            const newAccessToken = await refreshAccessToken();
+            originalRequest.headers['Authorization'] = `Bearer ${newAccessToken}`;
+            return axios(originalRequest);
+          } catch (refreshError) {
+            return Promise.reject(error);
+          }
+        }
+        
+        return Promise.reject(error);
+      }
+    );
+
+    return () => {
+      axios.interceptors.response.eject(interceptor);
+    };
+  }, [refreshToken]);
 
   // Check if user is authenticated on app load
   useEffect(() => {
     const checkAuth = async () => {
-      if (token) {
+      if (accessToken) {
         try {
           const response = await axios.get('/api/auth/user/');
           setUser(response.data);
         } catch (error) {
           console.error('Auth check failed:', error);
-          localStorage.removeItem('token');
-          setToken(null);
+          // Try to refresh token if auth check fails
+          if (refreshToken) {
+            try {
+              await refreshAccessToken();
+              const response = await axios.get('/api/auth/user/');
+              setUser(response.data);
+            } catch (refreshError) {
+              console.error('Token refresh failed during auth check:', refreshError);
+              logout();
+            }
+          } else {
+            logout();
+          }
         }
       }
       setLoading(false);
     };
 
     checkAuth();
-  }, [token]);
+  }, [accessToken]);
 
   const login = async (username, password) => {
     try {
@@ -55,17 +125,39 @@ export const AuthProvider = ({ children }) => {
         password,
       });
       
-      const { token: authToken, user: userData } = response.data;
-      localStorage.setItem('token', authToken);
-      setToken(authToken);
+      const { access, refresh, user: userData } = response.data;
+      
+      // Store JWT tokens
+      localStorage.setItem('access_token', access);
+      localStorage.setItem('refresh_token', refresh);
+      setAccessToken(access);
+      setRefreshToken(refresh);
       setUser(userData);
       
       return { success: true };
     } catch (error) {
       console.error('Login failed:', error);
+      
+      // Handle different error response structures
+      let errorMessage = 'Login failed';
+      
+      if (error.response?.data?.error) {
+        errorMessage = error.response.data.error;
+      } else if (error.response?.data?.message) {
+        errorMessage = error.response.data.message;
+      } else if (error.response?.status === 401) {
+        errorMessage = 'Invalid credentials';
+      } else if (error.response?.status === 500) {
+        errorMessage = 'Server error. Please try again later.';
+      }
+      
       return { 
         success: false, 
-        error: error.response?.data?.message || 'Login failed' 
+        error: errorMessage,
+        // Pass along additional info if available
+        info: error.response?.data?.message && error.response.data.error !== error.response.data.message 
+          ? error.response.data.message 
+          : null
       };
     }
   };
@@ -103,9 +195,24 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
-  const logout = () => {
-    localStorage.removeItem('token');
-    setToken(null);
+  const logout = async () => {
+    try {
+      // Call logout endpoint to blacklist the refresh token
+      if (refreshToken) {
+        await axios.post('/api/auth/logout/', {
+          refresh: refreshToken,
+        });
+      }
+    } catch (error) {
+      console.error('Logout request failed:', error);
+      // Continue with local logout even if request fails
+    }
+    
+    // Clear local storage and state
+    localStorage.removeItem('access_token');
+    localStorage.removeItem('refresh_token');
+    setAccessToken(null);
+    setRefreshToken(null);
     setUser(null);
     delete axios.defaults.headers.common['Authorization'];
   };

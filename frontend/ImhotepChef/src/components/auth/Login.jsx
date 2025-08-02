@@ -8,6 +8,7 @@ const Login = () => {
     password: '',
   });
   const [error, setError] = useState('');
+  const [info, setInfo] = useState('');
   const [loading, setLoading] = useState(false);
   
   const { login } = useAuth();
@@ -18,12 +19,16 @@ const Login = () => {
       ...formData,
       [e.target.name]: e.target.value,
     });
+    // Clear messages when user starts typing
+    if (error) setError('');
+    if (info) setInfo('');
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
     setError('');
+    setInfo('');
 
     const result = await login(formData.username, formData.password);
     
@@ -31,6 +36,10 @@ const Login = () => {
       navigate('/dashboard');
     } else {
       setError(result.error);
+      // Set info message if available
+      if (result.info) {
+        setInfo(result.info);
+      }
     }
     
     setLoading(false);
@@ -55,10 +64,22 @@ const Login = () => {
           </div>
         )}
 
+        {info && (
+          <div style={{ 
+            backgroundColor: '#dbeafe', 
+            color: '#1d4ed8', 
+            padding: '0.75rem', 
+            borderRadius: '0.25rem', 
+            marginBottom: '1rem' 
+          }}>
+            {info}
+          </div>
+        )}
+
         <form onSubmit={handleSubmit}>
           <div style={{ marginBottom: '1rem' }}>
             <label style={{ display: 'block', marginBottom: '0.5rem', color: 'var(--text-primary)' }}>
-              Username
+              Username or Email
             </label>
             <input
               type="text"
