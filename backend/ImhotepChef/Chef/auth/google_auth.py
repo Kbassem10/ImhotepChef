@@ -112,7 +112,7 @@ def google_auth(request):
                 email=email,
                 first_name=first_name,
                 last_name=last_name,
-                email_verify=True,  # Google emails are pre-verified
+                email_verify=True,
                 is_active=True
             )
             
