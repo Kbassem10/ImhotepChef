@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useAuth } from '../../contexts/AuthContext';
 import { useNavigate, Link } from 'react-router-dom';
+import '../../App.css';
 
 const Login = () => {
   const [formData, setFormData] = useState({
@@ -46,39 +47,32 @@ const Login = () => {
   };
 
   return (
-    <div className="app-container">
-      <div className="card" style={{ maxWidth: '400px', width: '100%' }}>
-        <h2 className="main-title" style={{ fontSize: '1.5rem', marginBottom: '1rem' }}>
-          Login to ImhotepChef
-        </h2>
+    <div className="login-container">
+      <div className="login-card">
+        <div className="login-header">
+          <h2 className="login-title">
+            Welcome Back
+          </h2>
+          <p className="login-subtitle">
+            Sign in to your Imhotep Chef account
+          </p>
+        </div>
         
         {error && (
-          <div style={{ 
-            backgroundColor: '#fee2e2', 
-            color: '#dc2626', 
-            padding: '0.75rem', 
-            borderRadius: '0.25rem', 
-            marginBottom: '1rem' 
-          }}>
+          <div className="login-error">
             {error}
           </div>
         )}
 
         {info && (
-          <div style={{ 
-            backgroundColor: '#dbeafe', 
-            color: '#1d4ed8', 
-            padding: '0.75rem', 
-            borderRadius: '0.25rem', 
-            marginBottom: '1rem' 
-          }}>
+          <div className="login-info">
             {info}
           </div>
         )}
 
-        <form onSubmit={handleSubmit}>
-          <div style={{ marginBottom: '1rem' }}>
-            <label style={{ display: 'block', marginBottom: '0.5rem', color: 'var(--text-primary)' }}>
+        <form onSubmit={handleSubmit} className="login-form">
+          <div className="login-field">
+            <label className="login-label">
               Username or Email
             </label>
             <input
@@ -87,19 +81,12 @@ const Login = () => {
               value={formData.username}
               onChange={handleChange}
               required
-              style={{
-                width: '100%',
-                padding: '0.75rem',
-                border: '1px solid var(--border-color)',
-                borderRadius: '0.25rem',
-                backgroundColor: 'var(--bg-primary)',
-                color: 'var(--text-primary)',
-              }}
+              className="login-input"
             />
           </div>
 
-          <div style={{ marginBottom: '1.5rem' }}>
-            <label style={{ display: 'block', marginBottom: '0.5rem', color: 'var(--text-primary)' }}>
+          <div className="login-field">
+            <label className="login-label">
               Password
             </label>
             <input
@@ -108,30 +95,27 @@ const Login = () => {
               value={formData.password}
               onChange={handleChange}
               required
-              style={{
-                width: '100%',
-                padding: '0.75rem',
-                border: '1px solid var(--border-color)',
-                borderRadius: '0.25rem',
-                backgroundColor: 'var(--bg-primary)',
-                color: 'var(--text-primary)',
-              }}
+              className="login-input"
             />
           </div>
 
           <button
             type="submit"
             disabled={loading}
-            className="count-button"
-            style={{ width: '100%', padding: '0.75rem' }}
+            className="login-button"
           >
-            {loading ? 'Logging in...' : 'Login'}
+            {loading ? 'Signing in...' : 'Sign In'}
           </button>
         </form>
 
-        <p className="card-text" style={{ textAlign: 'center', marginTop: '1rem' }}>
-          Don't have an account? <Link to="/register" style={{ color: 'var(--button-bg)' }}>Register</Link>
-        </p>
+        <div className="login-footer">
+          <p className="login-footer-text">
+            Don't have an account?{' '}
+            <Link to="/register" className="login-link">
+              Create Account
+            </Link>
+          </p>
+        </div>
       </div>
     </div>
   );

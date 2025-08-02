@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useAuth } from '../../contexts/AuthContext';
 import { Link, useNavigate } from 'react-router-dom';
+import '../../App.css';
 
 const Register = () => {
   const [formData, setFormData] = useState({
@@ -21,6 +22,8 @@ const Register = () => {
       ...formData,
       [e.target.name]: e.target.value,
     });
+    // Clear error when user starts typing
+    if (error) setError('');
   };
 
   const handleSubmit = async (e) => {
@@ -53,16 +56,21 @@ const Register = () => {
 
   if (success) {
     return (
-      <div className="app-container">
-        <div className="card" style={{ maxWidth: '400px', width: '100%' }}>
-          <h2 className="main-title" style={{ fontSize: '1.5rem', marginBottom: '1rem' }}>
-            Registration Successful!
-          </h2>
-          <p className="card-text">
-            Your account has been created successfully. Please check your email and click the verification link to activate your account before logging in.
-          </p>
-          <div style={{ marginTop: '1rem' }}>
-            <a href="/login" style={{ color: 'var(--button-bg)' }}>Go to Login</a>
+      <div className="register-container">
+        <div className="register-card">
+          <div className="register-success">
+            <div className="success-icon">
+              ✓
+            </div>
+            <h2 className="register-success-title">
+              Registration Successful!
+            </h2>
+            <p className="register-success-text">
+              Your account has been created successfully. Please check your email and click the verification link to activate your account before logging in.
+            </p>
+            <Link to="/login" className="register-success-button">
+              Go to Login
+            </Link>
           </div>
         </div>
       </div>
@@ -70,27 +78,26 @@ const Register = () => {
   }
 
   return (
-    <div className="app-container">
-      <div className="card" style={{ maxWidth: '400px', width: '100%' }}>
-        <h2 className="main-title" style={{ fontSize: '1.5rem', marginBottom: '1rem' }}>
-          Register for ImhotepChef
-        </h2>
+    <div className="register-container">
+      <div className="register-card">
+        <div className="register-header">
+          <h2 className="register-title">
+            Join Imhotep Chef
+          </h2>
+          <p className="register-subtitle">
+            Create your account to start cooking
+          </p>
+        </div>
         
         {error && (
-          <div style={{ 
-            backgroundColor: '#fee2e2', 
-            color: '#dc2626', 
-            padding: '0.75rem', 
-            borderRadius: '0.25rem', 
-            marginBottom: '1rem' 
-          }}>
+          <div className="register-error">
             {error}
           </div>
         )}
 
-        <form onSubmit={handleSubmit}>
-          <div style={{ marginBottom: '1rem' }}>
-            <label style={{ display: 'block', marginBottom: '0.5rem', color: 'var(--text-primary)' }}>
+        <form onSubmit={handleSubmit} className="register-form">
+          <div className="register-field">
+            <label className="register-label">
               Username
             </label>
             <input
@@ -99,19 +106,12 @@ const Register = () => {
               value={formData.username}
               onChange={handleChange}
               required
-              style={{
-                width: '100%',
-                padding: '0.75rem',
-                border: '1px solid var(--border-color)',
-                borderRadius: '0.25rem',
-                backgroundColor: 'var(--bg-primary)',
-                color: 'var(--text-primary)',
-              }}
+              className="register-input"
             />
           </div>
 
-          <div style={{ marginBottom: '1rem' }}>
-            <label style={{ display: 'block', marginBottom: '0.5rem', color: 'var(--text-primary)' }}>
+          <div className="register-field">
+            <label className="register-label">
               Email
             </label>
             <input
@@ -120,19 +120,12 @@ const Register = () => {
               value={formData.email}
               onChange={handleChange}
               required
-              style={{
-                width: '100%',
-                padding: '0.75rem',
-                border: '1px solid var(--border-color)',
-                borderRadius: '0.25rem',
-                backgroundColor: 'var(--bg-primary)',
-                color: 'var(--text-primary)',
-              }}
+              className="register-input"
             />
           </div>
 
-          <div style={{ marginBottom: '1rem' }}>
-            <label style={{ display: 'block', marginBottom: '0.5rem', color: 'var(--text-primary)' }}>
+          <div className="register-field">
+            <label className="register-label">
               Password
             </label>
             <input
@@ -141,19 +134,12 @@ const Register = () => {
               value={formData.password}
               onChange={handleChange}
               required
-              style={{
-                width: '100%',
-                padding: '0.75rem',
-                border: '1px solid var(--border-color)',
-                borderRadius: '0.25rem',
-                backgroundColor: 'var(--bg-primary)',
-                color: 'var(--text-primary)',
-              }}
+              className="register-input"
             />
           </div>
 
-          <div style={{ marginBottom: '1.5rem' }}>
-            <label style={{ display: 'block', marginBottom: '0.5rem', color: 'var(--text-primary)' }}>
+          <div className="register-field">
+            <label className="register-label">
               Confirm Password
             </label>
             <input
@@ -162,30 +148,27 @@ const Register = () => {
               value={formData.password2}
               onChange={handleChange}
               required
-              style={{
-                width: '100%',
-                padding: '0.75rem',
-                border: '1px solid var(--border-color)',
-                borderRadius: '0.25rem',
-                backgroundColor: 'var(--bg-primary)',
-                color: 'var(--text-primary)',
-              }}
+              className="register-input"
             />
           </div>
 
           <button
             type="submit"
             disabled={loading}
-            className="count-button"
-            style={{ width: '100%', padding: '0.75rem' }}
+            className="register-button"
           >
-            {loading ? 'Creating Account...' : 'Register'}
+            {loading ? 'Creating Account...' : 'Create Account'}
           </button>
         </form>
 
-        <p className="card-text" style={{ textAlign: 'center', marginTop: '1rem' }}>
-          Already have an account? <Link to="/login" style={{ color: 'var(--button-bg)' }}>Login</Link>
-        </p>
+        <div className="register-footer">
+          <p className="register-footer-text">
+            Already have an account?{' '}
+            <Link to="/login" className="register-link">
+              Sign In
+            </Link>
+          </p>
+        </div>
       </div>
     </div>
   );

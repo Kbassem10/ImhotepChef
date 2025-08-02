@@ -57,7 +57,7 @@ function LandingPage() {
         </a>
       </div>
       
-      <h1 className="main-title">ImhotepChef</h1>
+      <h1 className="main-title">Imhotep Chef</h1>
       
       <div className="card">
         <button 

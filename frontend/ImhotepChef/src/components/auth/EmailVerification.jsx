@@ -1,12 +1,14 @@
 import { useState, useEffect } from 'react';
 import { useParams, useNavigate, Link } from 'react-router-dom';
 import axios from 'axios';
+import '../../App.css';
 
 const EmailVerification = () => {
   const { uid, token } = useParams();
   const navigate = useNavigate();
   const [status, setStatus] = useState('verifying'); // 'verifying', 'success', 'error'
   const [message, setMessage] = useState('');
+  const [countdown, setCountdown] = useState(10);
 
   useEffect(() => {
     const verifyEmail = async () => {
@@ -19,12 +21,21 @@ const EmailVerification = () => {
         setStatus('success');
         setMessage('Your email has been verified successfully!');
         
-        // Redirect to login after 10 seconds
-        setTimeout(() => {
-          navigate('/login', { 
-            state: { message: 'Email verified! You can now log in.' }
+        // Start countdown
+        const timer = setInterval(() => {
+          setCountdown((prev) => {
+            if (prev <= 1) {
+              clearInterval(timer);
+              navigate('/login', { 
+                state: { message: 'Email verified! You can now log in.' }
+              });
+              return 0;
+            }
+            return prev - 1;
           });
-        }, 10000);
+        }, 1000);
+        
+        return () => clearInterval(timer);
         
       } catch (error) {
         setStatus('error');
@@ -47,28 +58,14 @@ const EmailVerification = () => {
     switch (status) {
       case 'verifying':
         return (
-          <div className="spinner">
-            <svg className="animate-spin" width="48" height="48" viewBox="0 0 24 24">
-              <circle
-                cx="12"
-                cy="12"
-                r="10"
-                stroke="currentColor"
-                strokeWidth="4"
-                fill="none"
-                strokeDasharray="31.416"
-                strokeDashoffset="31.416"
-                style={{
-                  animation: 'spin 2s linear infinite',
-                }}
-              />
-            </svg>
+          <div className="verification-spinner">
+            <div className="spinner-ring"></div>
           </div>
         );
       case 'success':
-        return <div style={{ fontSize: '48px', color: '#059669' }}>✅</div>;
+        return <div className="verification-icon success-icon">✓</div>;
       case 'error':
-        return <div style={{ fontSize: '48px', color: '#dc2626' }}>❌</div>;
+        return <div className="verification-icon error-icon">✕</div>;
       default:
         return null;
     }
@@ -82,6 +79,19 @@ const EmailVerification = () => {
         return 'Email Verified Successfully!';
       case 'error':
         return 'Verification Failed';
+      default:
+        return '';
+    }
+  };
+
+  const getSubtitle = () => {
+    switch (status) {
+      case 'verifying':
+        return 'Please wait while we verify your email address...';
+      case 'success':
+        return 'Welcome to ImhotepChef! You can now log in and start your culinary journey.';
+      case 'error':
+        return message;
       default:
         return '';
     }
@@ -110,60 +120,37 @@ const EmailVerification = () => {
   };
 
   return (
-    <div className="app-container">
-      <style>
-        {`
-          @keyframes spin {
-            from { transform: rotate(0deg); }
-            to { transform: rotate(360deg); }
-          }
-          .spinner svg {
-            animation: spin 2s linear infinite;
-            color: var(--button-bg);
-          }
-        `}
-      </style>
-      
-      <div className="card" style={{ maxWidth: '500px', width: '100%', textAlign: 'center' }}>
-        <div style={{ marginBottom: '2rem' }}>
-          {getIcon()}
+    <div className="verification-container">
+      <div className="verification-card">
+        <div className="verification-header">
+          <div className="verification-icon-container">
+            {getIcon()}
+          </div>
+          
+          <h1 className="verification-title">
+            {getTitle()}
+          </h1>
+          
+          <p className="verification-subtitle">
+            {getSubtitle()}
+          </p>
         </div>
         
-        <h1 
-          className="main-title" 
-          style={{ 
-            fontSize: '1.5rem', 
-            marginBottom: '1rem',
-            color: status === 'success' ? '#059669' : status === 'error' ? '#dc2626' : 'var(--text-primary)'
-          }}
-        >
-          {getTitle()}
-        </h1>
-        
-        <p className="card-text" style={{ marginBottom: '2rem' }}>
-          {status === 'verifying' && 'Please wait while we verify your email address...'}
-          {status === 'success' && 'Welcome to ImhotepChef! You can now log in and start your culinary journey.'}
-          {status === 'error' && message}
-        </p>
-        
         {status !== 'verifying' && (
-          <Link 
-            to={getButtonLink()}
-            className="count-button"
-            style={{ 
-              textDecoration: 'none', 
-              display: 'inline-block',
-              padding: '0.75rem 1.5rem'
-            }}
-          >
-            {getButtonText()}
-          </Link>
+          <div className="verification-actions">
+            <Link 
+              to={getButtonLink()}
+              className="verification-button"
+            >
+              {getButtonText()}
+            </Link>
+          </div>
         )}
         
-        {status === 'success' && (
-          <p className="card-text" style={{ marginTop: '1rem', fontSize: '0.875rem' }}>
-            Redirecting to login in 3 seconds...
-          </p>
+        {status === 'success' && countdown > 0 && (
+          <div className="verification-countdown">
+            <p>Redirecting to login in {countdown} seconds...</p>
+          </div>
         )}
       </div>
     </div>
