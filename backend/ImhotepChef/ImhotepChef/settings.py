@@ -29,6 +29,24 @@ DEBUG = config('DEBUG', default=True, cast=bool)
 
 ALLOWED_HOSTS = ['localhost', '127.0.0.1', '0.0.0.0', 'backend']
 
+if DEBUG:
+    # Add this to your settings
+    SITE_DOMAIN = 'http://127.0.0.1:8000'
+else:
+    SITE_DOMAIN = 'https://imhotepsmartclinic.pythonanywhere.com' 
+
+if DEBUG == False:
+    # Security settings - keep these as they are
+    SECURE_SSL_REDIRECT = True
+    SESSION_COOKIE_SECURE = True
+    CSRF_COOKIE_SECURE = True
+    SECURE_BROWSER_XSS_FILTER = True
+    SECURE_CONTENT_TYPE_NOSNIFF = True
+    X_FRAME_OPTIONS = 'DENY'
+
+    SECURE_HSTS_SECONDS = 31536000  # 1 year
+    SECURE_HSTS_INCLUDE_SUBDOMAINS = True
+    SECURE_HSTS_PRELOAD = True
 
 # Application definition
 
@@ -40,13 +58,14 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'rest_framework',
+    'rest_framework.authtoken',
     'corsheaders',
+    'Chef',
 ]
 
 # REST Framework configuration
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': [
-        'rest_framework.authentication.SessionAuthentication',
         'rest_framework.authentication.TokenAuthentication',
     ],
     'DEFAULT_PERMISSION_CLASSES': [
@@ -84,8 +103,21 @@ TEMPLATES = [
     },
 ]
 
+ACCOUNT_EMAIL_VERIFICATION = "mandatory"
+ACCOUNT_SIGNUP_FIELDS = ['email*', 'username*', 'password1*', 'password2*']
+ACCOUNT_LOGIN_METHODS = {'email', 'username'}
+ACCOUNT_UNIQUE_EMAIL = True
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+EMAIL_HOST_USER = 'imhoteptech1@gmail.com'
+EMAIL_HOST_PASSWORD =  config('MAIL_PASSWORD')
+
 WSGI_APPLICATION = 'ImhotepChef.wsgi.application'
 
+AUTH_USER_MODEL = 'Chef.User'
 
 # Database
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
@@ -175,6 +207,24 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:3000",
     "http://127.0.0.1:3000",
+    "http://localhost:3001",  # Add if React runs on different port
+    "http://127.0.0.1:3001",
 ]
 
 CORS_ALLOW_CREDENTIALS = True
+
+# Allow all origins during development (less secure, only for dev)
+if DEBUG:
+    CORS_ALLOW_ALL_ORIGINS = True
+
+# Add this configuration for Google OAuth
+SOCIALACCOUNT_PROVIDERS = {
+    'google': {
+        'APP': {
+            'client_id': config('GOOGLE_CLIENT_ID', ''),
+            'secret': config('GOOGLE_CLIENT_SECRET', ''),
+        },
+        'REDIRECT_URI': f"{SITE_DOMAIN}/google/callback/",
+        'SCOPE': ['profile', 'email'],
+    }
+}
