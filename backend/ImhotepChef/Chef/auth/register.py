@@ -94,7 +94,7 @@ def register_view(request):
                 username=username,
                 email=email,
                 password=password,
-                email_verify=True,
+                email_verify=False,
                 first_name=first_name,
                 last_name=last_name
             )
@@ -106,23 +106,73 @@ def register_view(request):
             )
 
         # Send verification email
-        # mail_subject = 'Activate your account.'
-        # current_site = SITE_DOMAIN.rstrip('/')  # Remove trailing slash if present
-        # message = render_to_string('activate_mail_send.html', {
-        #     'user': user,
-        #     'domain': current_site,
-        #     'uid': urlsafe_base64_encode(force_bytes(user.pk)),
-        #     'token': default_token_generator.make_token(user),
-        # })
-        # send_mail(mail_subject, message, 'imhoteptech1@gmail.com', [email], html_message=message)
+        try:
+            mail_subject = 'Activate your ImhotepChef account'
+            current_site = SITE_DOMAIN.rstrip('/')  # Remove trailing slash if present
+            message = render_to_string('activate_mail_send.html', {
+                'user': user,
+                'domain': current_site,
+                'uid': urlsafe_base64_encode(force_bytes(user.pk)),
+                'token': default_token_generator.make_token(user),
+            })
+            send_mail(mail_subject, message, 'imhoteptech1@gmail.com', [email], html_message=message)
+        except Exception as email_error:
+            # If email fails, still create the user but log the error
+            print(f"Failed to send verification email: {str(email_error)}")
 
         return Response(
-            {'message': 'User created successfully'}, 
+            {'message': 'User created successfully. Please check your email to verify your account.'}, 
             status=status.HTTP_201_CREATED
         )
             
     except Exception as e:
         return Response(
             {'error': f'An error occurred during registration: {str(e)}'}, 
+            status=status.HTTP_500_INTERNAL_SERVER_ERROR
+        )
+
+#the verify email API route
+@api_view(['POST'])
+@permission_classes([AllowAny])
+def verify_email(request):
+    try:
+        uid = request.data.get('uid')
+        token = request.data.get('token')
+        
+        if not uid or not token:
+            return Response(
+                {'error': 'Missing verification parameters'}, 
+                status=status.HTTP_400_BAD_REQUEST
+            )
+        
+        # Decode the user ID
+        try:
+            user_id = force_str(urlsafe_base64_decode(uid))
+            user = User.objects.get(pk=user_id)
+        except (TypeError, ValueError, OverflowError, User.DoesNotExist):
+            return Response(
+                {'error': 'Invalid verification link'}, 
+                status=status.HTTP_400_BAD_REQUEST
+            )
+
+        # Check if the token is valid
+        if default_token_generator.check_token(user, token):
+            user.is_active = True
+            user.email_verify = True
+            user.save()
+            
+            return Response(
+                {'message': 'Email verified successfully'}, 
+                status=status.HTTP_200_OK
+            )
+        else:
+            return Response(
+                {'error': 'Invalid or expired verification link'}, 
+                status=status.HTTP_400_BAD_REQUEST
+            )
+            
+    except Exception as e:
+        return Response(
+            {'error': f'An error occurred during verification: {str(e)}'}, 
             status=status.HTTP_500_INTERNAL_SERVER_ERROR
         )

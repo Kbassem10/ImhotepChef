@@ -11,5 +11,6 @@ urlpatterns = [
     path('auth/', include('rest_framework.urls')),
     path('auth/login/', views.login_view, name='login'),
     path('auth/register/', register.register_view, name='register'),
+    path('auth/verify-email/', register.verify_email, name='verify_email'),
     path('auth/user/', views.user_view, name='user'),
 ]

@@ -59,8 +59,11 @@ const Register = () => {
             Registration Successful!
           </h2>
           <p className="card-text">
-            Your account has been created. Redirecting to login...
+            Your account has been created successfully. Please check your email and click the verification link to activate your account before logging in.
           </p>
+          <div style={{ marginTop: '1rem' }}>
+            <a href="/login" style={{ color: 'var(--button-bg)' }}>Go to Login</a>
+          </div>
         </div>
       </div>
     );
