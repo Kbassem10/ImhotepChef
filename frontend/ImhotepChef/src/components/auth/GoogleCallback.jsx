@@ -1,14 +1,46 @@
 import { useEffect, useState, useRef } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import { useAuth } from '../../contexts/AuthContext';
+import axios from 'axios';
 
 const GoogleCallback = () => {
   const [searchParams] = useSearchParams();
   const navigate = useNavigate();
-  const { googleAuth } = useAuth();
+  const { login } = useAuth(); // Remove googleAuth
   const [status, setStatus] = useState('processing');
   const [message, setMessage] = useState('Processing Google authentication...');
   const hasProcessed = useRef(false);
+
+  const googleAuth = async (code) => {
+    try {
+      const response = await axios.post('/api/auth/google/authenticate/', {
+        code,
+      });
+      
+      const { access, refresh, user: userData, is_new_user } = response.data;
+      
+      return { 
+        success: true, 
+        isNewUser: is_new_user || false,
+        data: { access, refresh, user: userData }
+      };
+    } catch (error) {
+      console.error('Google authentication failed:', error);
+      
+      let errorMessage = 'Google authentication failed';
+      
+      if (error.response?.data?.error) {
+        errorMessage = error.response.data.error;
+      } else if (error.response?.status === 500) {
+        errorMessage = 'Server error. Please try again later.';
+      }
+      
+      return { 
+        success: false, 
+        error: errorMessage
+      };
+    }
+  };
 
   useEffect(() => {
     const handleGoogleCallback = async () => {
@@ -37,6 +69,7 @@ const GoogleCallback = () => {
         const result = await googleAuth(code);
         
         if (result.success) {
+          login(result.data);
           setStatus('success');
           if (result.isNewUser) {
             setMessage('Welcome to ImhotepChef! Your account has been created successfully.');
@@ -57,7 +90,7 @@ const GoogleCallback = () => {
     };
 
     handleGoogleCallback();
-  }, [searchParams, googleAuth, navigate]);
+  }, [searchParams, login, navigate]);
 
   const getIcon = () => {
     switch (status) {

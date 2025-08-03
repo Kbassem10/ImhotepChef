@@ -118,128 +118,15 @@ export const AuthProvider = ({ children }) => {
     checkAuth();
   }, [accessToken]);
 
-  const login = async (username, password) => {
-    try {
-      const response = await axios.post('/api/auth/login/', {
-        username,
-        password,
-      });
-      
-      const { access, refresh, user: userData } = response.data;
-      
-      // Store JWT tokens
-      localStorage.setItem('access_token', access);
-      localStorage.setItem('refresh_token', refresh);
-      setAccessToken(access);
-      setRefreshToken(refresh);
-      setUser(userData);
-      
-      return { success: true };
-    } catch (error) {
-      console.error('Login failed:', error);
-      
-      // Handle different error response structures
-      let errorMessage = 'Login failed';
-      
-      if (error.response?.data?.error) {
-        errorMessage = error.response.data.error;
-      } else if (error.response?.data?.message) {
-        errorMessage = error.response.data.message;
-      } else if (error.response?.status === 401) {
-        errorMessage = 'Invalid credentials';
-      } else if (error.response?.status === 500) {
-        errorMessage = 'Server error. Please try again later.';
-      }
-      
-      return { 
-        success: false, 
-        error: errorMessage,
-        // Pass along additional info if available
-        info: error.response?.data?.message && error.response.data.error !== error.response.data.message 
-          ? error.response.data.message 
-          : null
-      };
-    }
-  };
-
-  const register = async (username, email, password, password2) => {
-    try {
-      const response = await axios.post('/api/auth/register/', {
-        username,
-        email,
-        password,
-        password2,
-      });
-      
-      return { success: true, message: 'Registration successful' };
-    } catch (error) {
-      console.error('Registration failed:', error);
-      
-      // Handle different error response structures
-      let errorMessage = 'Registration failed';
-      
-      if (error.response?.data?.error) {
-        errorMessage = Array.isArray(error.response.data.error) 
-          ? error.response.data.error.join(', ')
-          : error.response.data.error;
-      } else if (error.response?.data?.message) {
-        errorMessage = error.response.data.message;
-      } else if (error.response?.status === 500) {
-        errorMessage = 'Server error. Please try again later.';
-      }
-      
-      return { 
-        success: false, 
-        error: errorMessage
-      };
-    }
-  };
-
-  const googleAuth = async (code) => {
-    try {
-      const response = await axios.post('/api/auth/google/authenticate/', {
-        code,
-      });
-      
-      const { access, refresh, user: userData, is_new_user } = response.data;
-      
-      // Store JWT tokens
-      localStorage.setItem('access_token', access);
-      localStorage.setItem('refresh_token', refresh);
-      setAccessToken(access);
-      setRefreshToken(refresh);
-      setUser(userData);
-      
-      return { 
-        success: true, 
-        isNewUser: is_new_user || false 
-      };
-    } catch (error) {
-      console.error('Google authentication failed:', error);
-      
-      let errorMessage = 'Google authentication failed';
-      
-      if (error.response?.data?.error) {
-        errorMessage = error.response.data.error;
-      } else if (error.response?.status === 500) {
-        errorMessage = 'Server error. Please try again later.';
-      }
-      
-      return { 
-        success: false, 
-        error: errorMessage
-      };
-    }
-  };
-
-  const getGoogleAuthUrl = async () => {
-    try {
-      const response = await axios.get('/api/auth/google/url/');
-      return response.data.auth_url;
-    } catch (error) {
-      console.error('Failed to get Google auth URL:', error);
-      throw error;
-    }
+  const login = (loginData) => {
+    const { access, refresh, user: userData } = loginData;
+    
+    // Store JWT tokens
+    localStorage.setItem('access_token', access);
+    localStorage.setItem('refresh_token', refresh);
+    setAccessToken(access);
+    setRefreshToken(refresh);
+    setUser(userData);
   };
 
   const logout = async () => {
@@ -267,10 +154,7 @@ export const AuthProvider = ({ children }) => {
   const value = {
     user,
     login,
-    register,
     logout,
-    googleAuth,
-    getGoogleAuthUrl,
     loading,
     isAuthenticated: !!user,
   };
