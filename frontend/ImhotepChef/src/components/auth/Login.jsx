@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useAuth } from '../../contexts/AuthContext';
 import { useNavigate, Link } from 'react-router-dom';
+import axios from 'axios';
 import '../../App.css';
 
 const Login = () => {
@@ -15,7 +16,7 @@ const Login = () => {
 
   const [showPasswordState, setShowPasswordState] = useState(false);
   
-  const { login, getGoogleAuthUrl } = useAuth();
+  const { login } = useAuth(); // Remove getGoogleAuthUrl
   const navigate = useNavigate();
 
   const handleChange = (e) => {
@@ -28,15 +29,56 @@ const Login = () => {
     if (info) setInfo('');
   };
 
+  const loginUser = async (username, password) => {
+    try {
+      const response = await axios.post('/api/auth/login/', {
+        username,
+        password,
+      });
+      
+      const { access, refresh, user: userData } = response.data;
+      
+      return { 
+        success: true, 
+        data: { access, refresh, user: userData }
+      };
+    } catch (error) {
+      console.error('Login failed:', error);
+      
+      // Handle different error response structures
+      let errorMessage = 'Login failed';
+      
+      if (error.response?.data?.error) {
+        errorMessage = error.response.data.error;
+      } else if (error.response?.data?.message) {
+        errorMessage = error.response.data.message;
+      } else if (error.response?.status === 401) {
+        errorMessage = 'Invalid credentials';
+      } else if (error.response?.status === 500) {
+        errorMessage = 'Server error. Please try again later.';
+      }
+      
+      return { 
+        success: false, 
+        error: errorMessage,
+        // Pass along additional info if available
+        info: error.response?.data?.message && error.response.data.error !== error.response.data.message 
+          ? error.response.data.message 
+          : null
+      };
+    }
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
     setError('');
     setInfo('');
 
-    const result = await login(formData.username, formData.password);
+    const result = await loginUser(formData.username, formData.password);
     
     if (result.success) {
+      login(result.data);
       navigate('/dashboard');
     } else {
       setError(result.error);
@@ -47,6 +89,16 @@ const Login = () => {
     }
     
     setLoading(false);
+  };
+
+  const getGoogleAuthUrl = async () => {
+    try {
+      const response = await axios.get('/api/auth/google/url/');
+      return response.data.auth_url;
+    } catch (error) {
+      console.error('Failed to get Google auth URL:', error);
+      throw error;
+    }
   };
 
   const handleGoogleLogin = async () => {
@@ -164,6 +216,12 @@ const Login = () => {
             {loading ? 'Signing in...' : 'Sign In'}
           </button>
         </form>
+
+        <div style={{ textAlign: 'center', marginBottom: '1rem' }}>
+          <Link to="/forgot-password" className="login-link" style={{ fontSize: '0.9rem' }}>
+            Forgot your password?
+          </Link>
+        </div>
 
         <div className="login-divider">
           <span>or</span>
