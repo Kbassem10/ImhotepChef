@@ -129,6 +129,10 @@ export const AuthProvider = ({ children }) => {
     setUser(userData);
   };
 
+  const updateUser = (userData) => {
+    setUser(userData);
+  };
+
   const logout = async () => {
     try {
       // Call logout endpoint to blacklist the refresh token
@@ -155,6 +159,7 @@ export const AuthProvider = ({ children }) => {
     user,
     login,
     logout,
+    updateUser,
     loading,
     isAuthenticated: !!user,
   };

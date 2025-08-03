@@ -1,4 +1,5 @@
 import { useAuth } from '../contexts/AuthContext';
+import { Link } from 'react-router-dom';
 
 const Dashboard = () => {
   const { user, logout } = useAuth();
@@ -12,14 +13,29 @@ const Dashboard = () => {
         </p>
         <p className="card-text">
           Email: {user?.email}
+          {!user?.email_verify && (
+            <span style={{ color: 'orange', marginLeft: '8px' }}>
+              (Not verified)
+            </span>
+          )}
         </p>
-        <button 
-          onClick={logout}
-          className="count-button"
-          style={{ marginTop: '1rem' }}
-        >
-          Logout
-        </button>
+        
+        <div style={{ display: 'flex', gap: '1rem', marginTop: '1rem', flexWrap: 'wrap' }}>
+          <Link 
+            to="/profile"
+            className="count-button"
+            style={{ textDecoration: 'none', textAlign: 'center' }}
+          >
+            Manage Profile
+          </Link>
+          <button 
+            onClick={logout}
+            className="count-button"
+            style={{ backgroundColor: 'var(--text-muted)' }}
+          >
+            Logout
+          </button>
+        </div>
       </div>
     </div>
   );
