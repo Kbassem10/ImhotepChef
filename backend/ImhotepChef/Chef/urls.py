@@ -12,12 +12,13 @@ router = DefaultRouter()
 
 urlpatterns = [
     path('', include(router.urls)),
+    #User data endpoint
+    path('user-data/', views.user_view, name='user_data'),
     # JWT Authentication endpoints
     path('auth/login/', login.login_view, name='login'),
     path('auth/logout/', logout.logout_view, name='logout'),
     path('auth/register/', register.register_view, name='register'),
     path('auth/verify-email/', register.verify_email, name='verify_email'),
-    path('auth/user/', views.user_view, name='user'),
     path('auth/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
     path('auth/token/verify/', TokenVerifyView.as_view(), name='token_verify'),
     # Password Reset endpoints
@@ -29,8 +30,8 @@ urlpatterns = [
     path('auth/google/authenticate/', google_auth.google_auth, name='google_auth'),
     path('auth/google/callback/', google_auth.google_callback, name='google_callback'),
     # Profile endpoints
-    path('auth/profile/', profile.get_profile, name='get_profile'),
-    path('auth/profile/update/', profile.update_profile, name='update_profile'),
-    path('auth/profile/change-password/', profile.change_password, name='change_password'),
-    path('auth/profile/verify-email-change/', profile.verify_email_change, name='verify_email_change'),
+    path('profile/', profile.get_profile, name='get_profile'),
+    path('profile/update/', profile.update_profile, name='update_profile'),
+    path('profile/change-password/', profile.change_password, name='change_password'),
+    path('profile/verify-email-change/', profile.verify_email_change, name='verify_email_change'),
 ]

@@ -733,11 +733,7 @@
   justify-content: center;
   padding: 2rem;
   width: 100%;
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
+  /* Remove position: fixed to work with navbar layout */
 }
 
 .profile-card {
@@ -949,6 +945,8 @@
 @media (max-width: 768px) {
   .profile-container {
     padding: 1rem;
+    /* Adjust for mobile navbar */
+    padding-top: 6rem;
   }
   
   .profile-card {
@@ -982,6 +980,11 @@
 }
 
 @media (max-width: 480px) {
+  .profile-container {
+    padding: 1rem;
+    padding-top: 6rem;
+  }
+  
   .profile-card {
     padding: 1rem;
   }
