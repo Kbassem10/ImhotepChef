@@ -71,11 +71,6 @@
   justify-content: center;
   padding: 1rem;
   width: 100%;
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
 }
 
 .login-card {
@@ -287,11 +282,6 @@
   justify-content: center;
   padding: 1rem;
   width: 100%;
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
 }
 
 .register-card {
@@ -543,11 +533,6 @@
   justify-content: center;
   padding: 1rem;
   width: 100%;
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
 }
 
 .verification-card {
@@ -738,6 +723,7 @@
   left: 0;
   right: 0;
   bottom: 0;
+  overflow-y: auto;
 }
 
 .dashboard-card {
@@ -750,6 +736,8 @@
   box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
   border: 1px solid rgba(255, 255, 255, 0.2);
   margin: 1rem;
+  max-height: calc(100vh - 2rem);
+  overflow-y: auto;
 }
 
 .dashboard-title {
@@ -821,6 +809,7 @@
   left: 0;
   right: 0;
   bottom: 0;
+  overflow-y: auto;
 }
 
 .profile-page-card {
@@ -833,6 +822,8 @@
   box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
   border: 1px solid rgba(255, 255, 255, 0.2);
   margin: 1rem;
+  max-height: calc(100vh - 2rem);
+  overflow-y: auto;
 }
 
 .profile-page-title {
@@ -1240,6 +1231,8 @@
   margin-top: 2rem;
   box-shadow: 0 4px 15px rgba(245, 158, 11, 0.1);
   animation: slideInUp 0.5s ease-out;
+  max-height: none;
+  overflow: visible;
 }
 
 @keyframes slideInUp {
@@ -1270,6 +1263,7 @@
   padding: 2rem;
   border: 1px solid rgba(245, 158, 11, 0.2);
   backdrop-filter: blur(10px);
+  margin-bottom: 1rem;
 }
 
 .suggested-recipe h3 {
