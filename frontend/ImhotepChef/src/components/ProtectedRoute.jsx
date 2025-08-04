@@ -36,12 +36,16 @@ const ProtectedRoute = ({ children }) => {
   }
 
   return (
-    <div className="protected-layout">
+    <>
       <Navbar onToggle={setNavbarOpen} />
-      <main className={`main-content ${!navbarOpen ? 'navbar-collapsed' : ''}`}>
+      <div style={{ 
+        marginLeft: !isMobile && navbarOpen ? '280px' : '0',
+        transition: 'margin-left 0.3s ease',
+        minHeight: '100vh'
+      }}>
         {children}
-      </main>
-    </div>
+      </div>
+    </>
   );
 };
 

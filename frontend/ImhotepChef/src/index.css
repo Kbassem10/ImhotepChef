@@ -46,6 +46,8 @@ body {
   color: var(--text-primary);
   transition: background-color 0.3s, color 0.3s;
   font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
+  overflow-x: hidden;
+  overflow-y: auto;
 }
 
 #root {
@@ -63,6 +65,7 @@ body {
   padding: 2rem;
   transition: all 0.3s;
   background-color: var(--bg-primary);
+  position: relative;
 }
 
 .dark-toggle {
@@ -76,6 +79,7 @@ body {
   box-shadow: var(--shadow-lg);
   cursor: pointer;
   transition: all 0.3s;
+  z-index: 1000;
 }
 
 .dark-toggle:hover {
@@ -197,7 +201,9 @@ body {
   cursor: pointer;
   box-shadow: var(--shadow);
   transition: all 0.3s;
-  display: block;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .navbar-toggle:hover {
@@ -227,6 +233,8 @@ body {
   z-index: 1000;
   transition: transform 0.3s ease;
   overflow-y: auto;
+  display: flex;
+  flex-direction: column;
 }
 
 .navbar.navbar-collapsed {
@@ -384,126 +392,16 @@ body {
   display: none;
 }
 
-/* Protected Layout */
-.protected-layout {
-  display: flex;
-  min-height: 100vh;
-}
-
-.main-content {
-  flex: 1;
-  margin-left: 280px;
-  min-height: 100vh;
-  background-color: var(--bg-primary);
-  transition: margin-left 0.3s ease;
-  padding-top: 5rem; /* Add space for toggle button */
-}
-
-.main-content.navbar-collapsed {
-  margin-left: 0;
-}
-
-/* Dashboard Styles */
-.dashboard-container {
-  min-height: calc(100vh - 5rem);
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  padding: 2rem;
-  background-color: var(--bg-primary);
-}
-
-.add-ingredient-form {
-  width: 100%;
-  margin-bottom: 1rem;
-}
-
-.ingredients-list {
-  list-style: none;
-  padding: 0;
-  margin: 1rem 0;
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.5rem;
-}
-
-.ingredients-list li {
-  background: linear-gradient(135deg, #667eea, #764ba2);
-  color: white;
-  padding: 0.5rem 1rem;
-  border-radius: 1rem;
-  font-size: 0.9rem;
-  font-weight: 500;
-}
-
-.get-recipe-container {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 1rem;
-  background-color: var(--bg-primary);
-  border-radius: 0.5rem;
-  margin: 1rem 0;
-  border: 1px solid var(--border-color);
-}
-
-.get-recipe-container h3 {
-  margin: 0 0 0.5rem 0;
-  color: var(--text-primary);
-}
-
-.get-recipe-container p {
-  margin: 0;
-  color: var(--text-secondary);
-  font-size: 0.9rem;
-}
-
-.suggested-recipe-container {
-  margin-top: 2rem;
-  padding: 1.5rem;
-  background-color: var(--bg-primary);
-  border-radius: 0.5rem;
-  border: 1px solid var(--border-color);
-}
-
-.suggested-recipe-container h2 {
-  margin: 0 0 1rem 0;
-  color: var(--text-primary);
-}
-
-.suggested-recipe h3 {
-  margin: 0 0 0.5rem 0;
-  color: var(--text-primary);
-}
-
-.suggested-recipe p {
-  margin: 0;
-  color: var(--text-secondary);
-}
-
-@media (max-width: 768px) {
-  .get-recipe-container {
-    flex-direction: column;
-    text-align: center;
-    gap: 1rem;
-  }
-  
-  .add-ingredient-form > div {
-    flex-direction: column;
-  }
-  
-  .add-ingredient-form input {
-    margin-bottom: 1rem;
-  }
-}
-
 /* Mobile Responsive Navbar */
 @media (max-width: 768px) {
-  .navbar-toggle {
-    top: 1rem;
-    left: 1rem;
+  .main-content {
+    margin-left: 0;
+    padding: 1rem;
+    padding-top: 5rem;
+  }
+
+  .main-content.navbar-collapsed {
+    margin-left: 0;
   }
 
   .navbar {
@@ -514,27 +412,8 @@ body {
     transform: translateX(0);
   }
 
-  .navbar-content {
-    padding-top: 5rem; /* Maintain space for toggle button on mobile */
-  }
-
   .navbar-overlay {
     display: block;
-  }
-
-  .main-content {
-    margin-left: 0;
-    padding-top: 5rem; /* Maintain space for toggle button on mobile */
-  }
-
-  .main-content.navbar-collapsed {
-    margin-left: 0;
-  }
-
-  .protected-layout .dark-toggle {
-    top: 1rem;
-    right: 1rem;
-    left: auto;
   }
 }
 
@@ -558,6 +437,71 @@ body {
   .navbar-username,
   .navbar-email {
     text-align: center;
+  }
+}
+
+/* Mobile Responsiveness */
+@media (max-width: 768px) {
+  .app-container {
+    padding: 1rem;
+  }
+  
+  .logo-container {
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+  }
+  
+  .logo {
+    height: 4rem;
+    width: 4rem;
+  }
+  
+  .main-title {
+    font-size: 1.75rem;
+  }
+  
+  .card {
+    padding: 1.5rem;
+    margin: 0.5rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .app-container {
+    padding: 0.5rem;
+  }
+  
+  .logo {
+    height: 3rem;
+    width: 3rem;
+  }
+  
+  .main-title {
+    font-size: 1.5rem;
+  }
+  
+  .card {
+    padding: 1rem;
+  }
+  
+  .dark-toggle {
+    top: 0.5rem;
+    right: 0.5rem;
+    padding: 0.5rem;
+  }
+  
+  .dark-toggle svg {
+    width: 1.25rem;
+    height: 1.25rem;
+  }
+}
+
+/* Ensure full viewport coverage */
+@media (max-height: 600px) {
+  .app-container {
+    min-height: 100vh;
+    justify-content: flex-start;
+    padding-top: 2rem;
   }
 }
 

@@ -118,10 +118,10 @@ const Profile = () => {
   };
 
   return (
-    <div className="profile-container">
-      <div className="profile-card">
+    <div className="profile-page-container">
+      <div className="profile-page-card">
         <div className="profile-header">
-          <h1 className="profile-title">My Profile</h1>
+          <h1 className="profile-page-title">My Profile</h1>
           <div className="profile-actions">
             <Link to="/dashboard" className="profile-back-button">
               ← Back to Dashboard
@@ -169,7 +169,7 @@ const Profile = () => {
                   name="first_name"
                   value={profileData.first_name}
                   onChange={handleProfileChange}
-                  className="profile-input"
+                  className="profile-page-input"
                 />
               </div>
               <div className="profile-field">
@@ -179,7 +179,7 @@ const Profile = () => {
                   name="last_name"
                   value={profileData.last_name}
                   onChange={handleProfileChange}
-                  className="profile-input"
+                  className="profile-page-input"
                 />
               </div>
             </div>
@@ -192,7 +192,7 @@ const Profile = () => {
                 value={profileData.username}
                 onChange={handleProfileChange}
                 required
-                className="profile-input"
+                className="profile-page-input"
               />
             </div>
 
@@ -204,7 +204,7 @@ const Profile = () => {
                 value={profileData.email}
                 onChange={handleProfileChange}
                 required
-                className="profile-input"
+                className="profile-page-input"
               />
               {!user?.email_verify && (
                 <small className="profile-field-note">
@@ -216,7 +216,7 @@ const Profile = () => {
             <button
               type="submit"
               disabled={loading}
-              className="profile-submit-button"
+              className="profile-page-button"
             >
               {loading ? 'Updating...' : 'Update Profile'}
             </button>
@@ -234,7 +234,7 @@ const Profile = () => {
                   value={passwordData.current_password}
                   onChange={handlePasswordChange}
                   required
-                  className="profile-input"
+                  className="profile-page-input"
                 />
                 <button
                   type="button"
@@ -255,7 +255,7 @@ const Profile = () => {
                   value={passwordData.new_password}
                   onChange={handlePasswordChange}
                   required
-                  className="profile-input"
+                  className="profile-page-input"
                   minLength={8}
                 />
                 <button
@@ -277,7 +277,7 @@ const Profile = () => {
                   value={passwordData.confirm_password}
                   onChange={handlePasswordChange}
                   required
-                  className="profile-input"
+                  className="profile-page-input"
                   minLength={8}
                 />
                 <button
@@ -293,7 +293,7 @@ const Profile = () => {
             <button
               type="submit"
               disabled={loading}
-              className="profile-submit-button"
+              className="profile-page-button"
             >
               {loading ? 'Changing...' : 'Change Password'}
             </button>
