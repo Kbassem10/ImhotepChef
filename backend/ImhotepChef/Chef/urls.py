@@ -6,6 +6,7 @@ from rest_framework_simplejwt.views import (
 )
 from . import views
 from .auth import register, login, logout, google_auth, forget_password, profile
+from .main import get_recipe
 
 router = DefaultRouter()
 # Add your viewsets here when you create them
@@ -14,6 +15,8 @@ urlpatterns = [
     path('', include(router.urls)),
     #User data endpoint
     path('user-data/', views.user_view, name='user_data'),
+    # Recipe endpoints
+    path('recipes/generate/', get_recipe.get_ingredients, name='generate_recipes'),
     # JWT Authentication endpoints
     path('auth/login/', login.login_view, name='login'),
     path('auth/logout/', logout.logout_view, name='logout'),

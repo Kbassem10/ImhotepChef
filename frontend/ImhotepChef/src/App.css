@@ -1304,90 +1304,275 @@
   border: 1px solid #e5e7eb;
 }
 
-/* Mobile Responsiveness for Ingredients */
+/* Ingredient Item Styles */
+.ingredient-item {
+  display: flex !important;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+  position: relative;
+}
+
+.ingredient-name {
+  flex: 1;
+}
+
+.ingredient-remove {
+  background: rgba(220, 38, 38, 0.1);
+  color: #dc2626;
+  border: 1px solid rgba(220, 38, 38, 0.2);
+  border-radius: 50%;
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: bold;
+  line-height: 1;
+  transition: all 0.2s ease;
+  padding: 0;
+  flex-shrink: 0;
+}
+
+.ingredient-remove:hover {
+  background: rgba(220, 38, 38, 0.2);
+  color: #b91c1c;
+  transform: scale(1.1);
+}
+
+.ingredient-hint {
+  background: linear-gradient(135deg, #fef3c7, #fde68a);
+  border: 2px solid #f59e0b;
+  border-radius: 12px;
+  padding: 1rem;
+  margin-top: 1rem;
+  text-align: center;
+}
+
+.ingredient-hint p {
+  margin: 0;
+  color: #92400e;
+  font-weight: 500;
+}
+
+/* Recipe Loading Styles */
+.recipe-loading {
+  text-align: center;
+  padding: 2rem;
+}
+
+.recipe-loading .spinner-ring {
+  width: 3rem;
+  height: 3rem;
+  margin: 0 auto 1rem;
+}
+
+.recipe-loading p {
+  color: #6b7280;
+  font-size: 1rem;
+  margin: 0;
+}
+
+/* Recipe Error Styles */
+.recipe-error {
+  background-color: #fef2f2;
+  color: #dc2626;
+  padding: 1rem;
+  border-radius: 12px;
+  margin: 1rem 0;
+  border: 1px solid #fecaca;
+  text-align: center;
+}
+
+.suggested-recipe.error {
+  background-color: rgba(254, 242, 242, 0.9);
+  border: 1px solid #fecaca;
+}
+
+.retry-button {
+  background: #dc2626;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  padding: 0.75rem 1.5rem;
+  margin-top: 1rem;
+  cursor: pointer;
+  font-weight: 500;
+  transition: background-color 0.2s ease;
+}
+
+.retry-button:hover {
+  background: #b91c1c;
+}
+
+/* Enhanced Recipe Styles */
+.recipe-header {
+  border-bottom: 2px solid rgba(245, 158, 11, 0.3);
+  padding-bottom: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.recipe-header h3 {
+  margin-bottom: 0.75rem !important;
+  color: #92400e !important;
+  font-size: 1.75rem !important;
+}
+
+.recipe-meta {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+  font-size: 0.9rem;
+}
+
+.recipe-meta span {
+  background: rgba(245, 158, 11, 0.2);
+  color: #92400e;
+  padding: 0.25rem 0.75rem;
+  border-radius: 20px;
+  font-weight: 500;
+}
+
+.difficulty {
+  background: rgba(16, 185, 129, 0.2) !important;
+  color: #065f46 !important;
+}
+
+.recipe-description {
+  font-size: 1.1rem !important;
+  margin-bottom: 1.5rem !important;
+  color: #374151 !important;
+  font-style: normal !important;
+  text-align: left !important;
+  line-height: 1.6;
+}
+
+.recipe-ingredients,
+.recipe-instructions,
+.recipe-tips,
+.recipe-nutrition {
+  margin-bottom: 1.5rem;
+}
+
+.recipe-ingredients h4,
+.recipe-instructions h4,
+.recipe-tips h4,
+.recipe-nutrition h4 {
+  color: #92400e;
+  font-size: 1.1rem;
+  margin-bottom: 0.75rem;
+  font-weight: 600;
+}
+
+.recipe-ingredients ul,
+.recipe-tips ul {
+  list-style: disc;
+  margin-left: 1.5rem;
+  color: #374151;
+}
+
+.recipe-instructions ol {
+  list-style: decimal;
+  margin-left: 1.5rem;
+  color: #374151;
+}
+
+.recipe-ingredients li,
+.recipe-instructions li,
+.recipe-tips li {
+  margin-bottom: 0.5rem;
+  line-height: 1.5;
+}
+
+.optional {
+  color: #6b7280;
+  font-style: italic;
+}
+
+.nutrition-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+  gap: 0.75rem;
+  background: rgba(245, 158, 11, 0.1);
+  padding: 1rem;
+  border-radius: 8px;
+}
+
+.nutrition-grid span {
+  color: #92400e;
+  font-weight: 500;
+  font-size: 0.9rem;
+}
+
+/* Multiple Recipes Layout */
+.suggested-recipe-container .suggested-recipe + .suggested-recipe {
+  margin-top: 2rem;
+  border-top: 3px solid rgba(245, 158, 11, 0.3);
+  padding-top: 2rem;
+}
+
+/* Mobile Responsiveness for New Styles */
 @media (max-width: 768px) {
-  .ingredients-list {
-    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  .ingredient-remove {
+    width: 20px;
+    height: 20px;
+    font-size: 14px;
+  }
+  
+  .recipe-meta {
+    justify-content: center;
+  }
+  
+  .recipe-meta span {
+    font-size: 0.8rem;
+    padding: 0.2rem 0.6rem;
+  }
+  
+  .recipe-header h3 {
+    font-size: 1.5rem !important;
+  }
+  
+  .recipe-description {
+    font-size: 1rem !important;
+  }
+  
+  .nutrition-grid {
+    grid-template-columns: 1fr 1fr;
     gap: 0.5rem;
-    margin: 1.5rem 0;
-  }
-  
-  .ingredients-list li {
     padding: 0.75rem;
-    font-size: 0.9rem;
   }
   
-  .get-recipe-container {
-    padding: 1.5rem;
-    margin-top: 1.5rem;
-  }
-  
-  .get-recipe-container h3 {
-    font-size: 1.25rem;
-  }
-  
-  .get-recipe-container .count-button {
-    padding: 0.875rem 1.5rem;
-    font-size: 0.95rem;
-  }
-  
-  .suggested-recipe-container {
-    padding: 1.5rem;
-    margin-top: 1.5rem;
-  }
-  
-  .suggested-recipe-container h2 {
-    font-size: 1.5rem;
-  }
-  
-  .suggested-recipe {
-    padding: 1.5rem;
-  }
-  
-  .suggested-recipe h3 {
-    font-size: 1.25rem;
-  }
-  
-  .add-ingredient-form {
-    padding: 1rem;
+  .recipe-ingredients ul,
+  .recipe-instructions ol,
+  .recipe-tips ul {
+    margin-left: 1rem;
   }
 }
 
 @media (max-width: 480px) {
-  .ingredients-list {
-    grid-template-columns: 1fr 1fr;
+  .ingredient-item {
+    padding: 0.75rem 0.875rem !important;
   }
   
-  .ingredients-list li {
-    padding: 0.625rem;
-    font-size: 0.85rem;
+  .ingredient-remove {
+    width: 18px;
+    height: 18px;
+    font-size: 12px;
   }
   
-  .get-recipe-container {
-    padding: 1rem;
+  .recipe-meta {
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
   }
   
-  .get-recipe-container h3 {
-    font-size: 1.125rem;
+  .nutrition-grid {
+    grid-template-columns: 1fr;
   }
   
-  .suggested-recipe-container {
-    padding: 1rem;
-  }
-  
-  .suggested-recipe-container h2 {
-    font-size: 1.25rem;
-  }
-  
-  .suggested-recipe {
-    padding: 1rem;
-  }
-  
-  .suggested-recipe h3 {
-    font-size: 1.125rem;
-  }
-  
-  .suggested-recipe p {
-    font-size: 0.9rem;
+  .recipe-header h3 {
+    font-size: 1.25rem !important;
   }
 }
