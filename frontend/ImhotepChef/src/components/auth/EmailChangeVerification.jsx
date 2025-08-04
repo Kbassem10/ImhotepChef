@@ -13,7 +13,7 @@ const EmailChangeVerification = () => {
   useEffect(() => {
     const verifyEmailChange = async () => {
       try {
-        const response = await axios.post('/api/auth/profile/verify-email-change/', {
+        const response = await axios.post('/api/profile/verify-email-change/', {
           uid,
           token,
           new_email: new_email, // This is already the encoded email from URL params

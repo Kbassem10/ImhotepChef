@@ -184,6 +184,310 @@ body {
   color: var(--text-primary);
 }
 
+/* Navbar Styles */
+.navbar-toggle {
+  position: fixed;
+  top: 1rem;
+  left: 1rem;
+  z-index: 1100;
+  background-color: var(--bg-secondary);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  padding: 0.75rem;
+  cursor: pointer;
+  box-shadow: var(--shadow);
+  transition: all 0.3s;
+  display: block;
+}
+
+.navbar-toggle:hover {
+  box-shadow: var(--shadow-lg);
+}
+
+.navbar-toggle-icon {
+  width: 1.5rem;
+  height: 1.5rem;
+  color: var(--text-primary);
+  transition: transform 0.3s ease;
+}
+
+.navbar-toggle-icon.open {
+  transform: rotate(0deg); /* Remove rotation, use different icon */
+}
+
+.navbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100vh;
+  width: 280px;
+  background-color: var(--bg-secondary);
+  border-right: 1px solid var(--border-color);
+  box-shadow: var(--shadow-lg);
+  z-index: 1000;
+  transition: transform 0.3s ease;
+  overflow-y: auto;
+}
+
+.navbar.navbar-collapsed {
+  transform: translateX(-100%);
+}
+
+.navbar-content {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  padding: 1.5rem;
+  padding-top: 5rem; /* Add space for toggle button */
+}
+
+.navbar-brand {
+  margin-bottom: 2rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.navbar-title {
+  font-size: 1.5rem;
+  font-weight: bold;
+  background: linear-gradient(135deg, #667eea, #764ba2);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin: 0;
+}
+
+.navbar-user {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 2rem;
+  padding: 1rem;
+  background-color: var(--bg-primary);
+  border-radius: 12px;
+  border: 1px solid var(--border-color);
+}
+
+.navbar-avatar {
+  width: 3rem;
+  height: 3rem;
+  background: linear-gradient(135deg, #667eea, #764ba2);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-weight: bold;
+  font-size: 1.25rem;
+  flex-shrink: 0;
+}
+
+.navbar-user-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.navbar-username {
+  font-weight: 600;
+  color: var(--text-primary);
+  margin: 0 0 0.25rem 0;
+  font-size: 0.95rem;
+  word-break: break-word;
+}
+
+.navbar-email {
+  color: var(--text-secondary);
+  margin: 0;
+  font-size: 0.85rem;
+  word-break: break-word;
+}
+
+.navbar-unverified {
+  color: #f59e0b;
+  font-size: 0.75rem;
+  font-weight: 500;
+}
+
+.navbar-nav {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.navbar-link {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1rem;
+  color: var(--text-secondary);
+  text-decoration: none;
+  border-radius: 8px;
+  transition: all 0.2s;
+  font-weight: 500;
+}
+
+.navbar-link:hover {
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+}
+
+.navbar-link.active {
+  background: linear-gradient(135deg, #667eea, #764ba2);
+  color: white;
+}
+
+.navbar-link.active:hover {
+  background: linear-gradient(135deg, #5a67d8, #6b46c1);
+}
+
+.navbar-icon {
+  width: 1.25rem;
+  height: 1.25rem;
+  flex-shrink: 0;
+}
+
+.navbar-footer {
+  margin-top: auto;
+  padding-top: 1rem;
+  border-top: 1px solid var(--border-color);
+}
+
+.navbar-logout {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  width: 100%;
+  padding: 1rem;
+  background-color: transparent;
+  border: none;
+  color: #dc2626;
+  font-weight: 500;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.navbar-logout:hover {
+  background-color: #fef2f2;
+  color: #b91c1c;
+}
+
+.navbar-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 999;
+  display: none;
+}
+
+/* Protected Layout */
+.protected-layout {
+  display: flex;
+  min-height: 100vh;
+}
+
+.main-content {
+  flex: 1;
+  margin-left: 280px;
+  min-height: 100vh;
+  background-color: var(--bg-primary);
+  transition: margin-left 0.3s ease;
+  padding-top: 5rem; /* Add space for toggle button */
+}
+
+.main-content.navbar-collapsed {
+  margin-left: 0;
+}
+
+/* Dashboard Styles */
+.dashboard-container {
+  min-height: calc(100vh - 5rem);
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+  background-color: var(--bg-primary);
+}
+
+/* Profile Component Styles - Update to work with navbar */
+.profile-container {
+  min-height: calc(100vh - 5rem);
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+}
+
+/* Mobile Responsive Navbar */
+@media (max-width: 768px) {
+  .navbar-toggle {
+    top: 1rem;
+    left: 1rem;
+  }
+
+  .navbar {
+    transform: translateX(-100%);
+  }
+
+  .navbar.navbar-open {
+    transform: translateX(0);
+  }
+
+  .navbar-content {
+    padding-top: 5rem; /* Maintain space for toggle button on mobile */
+  }
+
+  .navbar-overlay {
+    display: block;
+  }
+
+  .main-content {
+    margin-left: 0;
+    padding-top: 5rem; /* Maintain space for toggle button on mobile */
+  }
+
+  .main-content.navbar-collapsed {
+    margin-left: 0;
+  }
+
+  .protected-layout .dark-toggle {
+    top: 1rem;
+    right: 1rem;
+    left: auto;
+  }
+}
+
+@media (max-width: 480px) {
+  .navbar {
+    width: 100vw;
+  }
+
+  .navbar-user {
+    flex-direction: column;
+    text-align: center;
+    gap: 0.75rem;
+  }
+
+  .navbar-avatar {
+    width: 2.5rem;
+    height: 2.5rem;
+    font-size: 1rem;
+  }
+
+  .navbar-username,
+  .navbar-email {
+    text-align: center;
+  }
+}
+
 /* Mobile Responsiveness */
 @media (max-width: 768px) {
   .app-container {

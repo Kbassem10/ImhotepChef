@@ -93,7 +93,7 @@ export const AuthProvider = ({ children }) => {
     const checkAuth = async () => {
       if (accessToken) {
         try {
-          const response = await axios.get('/api/auth/user/');
+          const response = await axios.get('/api/user-data/');
           setUser(response.data);
         } catch (error) {
           console.error('Auth check failed:', error);
@@ -101,7 +101,7 @@ export const AuthProvider = ({ children }) => {
           if (refreshToken) {
             try {
               await refreshAccessToken();
-              const response = await axios.get('/api/auth/user/');
+              const response = await axios.get('/api/user-data/');
               setUser(response.data);
             } catch (refreshError) {
               console.error('Token refresh failed during auth check:', refreshError);

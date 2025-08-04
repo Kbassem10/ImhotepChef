@@ -22,4 +22,5 @@ def user_view(request):
         'email': user.email,
         'first_name': user.first_name,
         'last_name': user.last_name,
+        'email_verify': getattr(user, 'email_verify', False),
     })

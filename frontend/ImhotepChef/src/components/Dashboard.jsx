@@ -2,10 +2,10 @@ import { useAuth } from '../contexts/AuthContext';
 import { Link } from 'react-router-dom';
 
 const Dashboard = () => {
-  const { user, logout } = useAuth();
+  const { user } = useAuth();
 
   return (
-    <div className="app-container">
+    <div className="dashboard-container">
       <div className="card" style={{ maxWidth: '600px', width: '100%' }}>
         <h1 className="main-title">Welcome to Imhotep Chef</h1>
         <p className="card-text">
@@ -28,13 +28,6 @@ const Dashboard = () => {
           >
             Manage Profile
           </Link>
-          <button 
-            onClick={logout}
-            className="count-button"
-            style={{ backgroundColor: 'var(--text-muted)' }}
-          >
-            Logout
-          </button>
         </div>
       </div>
     </div>

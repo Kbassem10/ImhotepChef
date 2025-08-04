@@ -69,7 +69,7 @@ const Profile = () => {
     setSuccess('');
 
     try {
-      const response = await axios.put('/api/auth/profile/update/', profileData);
+      const response = await axios.put('/api/profile/update/', profileData);
       setSuccess(response.data.message);
       
       // Update user context with new data
@@ -96,7 +96,7 @@ const Profile = () => {
     }
 
     try {
-      const response = await axios.post('/api/auth/profile/change-password/', passwordData);
+      const response = await axios.post('/api/profile/change-password/', passwordData);
       setSuccess(response.data.message);
       setPasswordData({
         current_password: '',
