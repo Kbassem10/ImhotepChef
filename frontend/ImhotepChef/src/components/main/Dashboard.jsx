@@ -55,25 +55,25 @@ const Dashboard = () => {
     }
 
     return (
-        <div className="dashboard-container">
-            <div className="card" style={{ maxWidth: '800px', width: '100%' }}>
-                <h1 className="main-title">Welcome to Imhotep Chef</h1>
-                <p className="card-text">
+        <div className="dashboard-page-container">
+            <div className="dashboard-card">
+                <h1 className="dashboard-title">Welcome to Imhotep Chef</h1>
+                <p className="dashboard-subtitle">
                     Hello, <strong>{user?.username}</strong>! Ready to cook something amazing?
                 </p>
                 
-                <form onSubmit={addIngredient} className="add-ingredient-form" style={{ marginTop: '2rem' }}>
+                <form onSubmit={addIngredient} className="add-ingredient-form">
                     <div style={{ display: 'flex', gap: '1rem', alignItems: 'center' }}>
                         <input
                             type="text"
                             placeholder="e.g. oregano"
                             aria-label="Add ingredient"
                             name="ingredient"
-                            className="login-input"
+                            className="dashboard-input"
                             style={{ flex: 1, margin: 0 }}
                             required
                         />
-                        <button type="submit" className="count-button">Add ingredient</button>
+                        <button type="submit" className="dashboard-button">Add ingredient</button>
                     </div>
                 </form>
 
@@ -85,16 +85,6 @@ const Dashboard = () => {
                 )}
 
                 {recipeShown && <ClaudeRecipe />}
-                
-                <div style={{ display: 'flex', gap: '1rem', marginTop: '2rem', flexWrap: 'wrap' }}>
-                    <Link 
-                        to="/profile"
-                        className="count-button"
-                        style={{ textDecoration: 'none', textAlign: 'center' }}
-                    >
-                        Manage Profile
-                    </Link>
-                </div>
             </div>
         </div>
     );

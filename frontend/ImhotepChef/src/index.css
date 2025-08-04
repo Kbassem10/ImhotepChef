@@ -197,7 +197,9 @@ body {
   cursor: pointer;
   box-shadow: var(--shadow);
   transition: all 0.3s;
-  display: block;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .navbar-toggle:hover {
@@ -227,6 +229,8 @@ body {
   z-index: 1000;
   transition: transform 0.3s ease;
   overflow-y: auto;
+  display: flex;
+  flex-direction: column;
 }
 
 .navbar.navbar-collapsed {
@@ -388,122 +392,84 @@ body {
 .protected-layout {
   display: flex;
   min-height: 100vh;
+  background-color: var(--bg-primary);
 }
 
 .main-content {
   flex: 1;
   margin-left: 280px;
-  min-height: 100vh;
-  background-color: var(--bg-primary);
+  padding: 2rem;
   transition: margin-left 0.3s ease;
-  padding-top: 5rem; /* Add space for toggle button */
+  min-height: 100vh;
+  overflow-y: auto;
 }
 
 .main-content.navbar-collapsed {
   margin-left: 0;
 }
 
-/* Dashboard Styles */
-.dashboard-container {
-  min-height: calc(100vh - 5rem);
-  width: 100%;
+.navbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100vh;
+  width: 280px;
+  background-color: var(--bg-secondary);
+  border-right: 1px solid var(--border-color);
+  box-shadow: var(--shadow-lg);
+  z-index: 1000;
+  transition: transform 0.3s ease;
+  overflow-y: auto;
   display: flex;
   flex-direction: column;
+}
+
+.navbar.navbar-collapsed {
+  transform: translateX(-100%);
+}
+
+.navbar-toggle {
+  position: fixed;
+  top: 1rem;
+  left: 1rem;
+  z-index: 1100;
+  background-color: var(--bg-secondary);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  padding: 0.75rem;
+  cursor: pointer;
+  box-shadow: var(--shadow);
+  transition: all 0.3s;
+  display: flex;
   align-items: center;
   justify-content: center;
-  padding: 2rem;
-  background-color: var(--bg-primary);
 }
 
-.add-ingredient-form {
-  width: 100%;
-  margin-bottom: 1rem;
+.navbar-toggle:hover {
+  box-shadow: var(--shadow-lg);
 }
 
-.ingredients-list {
-  list-style: none;
-  padding: 0;
-  margin: 1rem 0;
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.5rem;
-}
-
-.ingredients-list li {
-  background: linear-gradient(135deg, #667eea, #764ba2);
-  color: white;
-  padding: 0.5rem 1rem;
-  border-radius: 1rem;
-  font-size: 0.9rem;
-  font-weight: 500;
-}
-
-.get-recipe-container {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 1rem;
-  background-color: var(--bg-primary);
-  border-radius: 0.5rem;
-  margin: 1rem 0;
-  border: 1px solid var(--border-color);
-}
-
-.get-recipe-container h3 {
-  margin: 0 0 0.5rem 0;
+.navbar-toggle-icon {
+  width: 1.5rem;
+  height: 1.5rem;
   color: var(--text-primary);
+  transition: transform 0.3s ease;
 }
 
-.get-recipe-container p {
-  margin: 0;
-  color: var(--text-secondary);
-  font-size: 0.9rem;
-}
-
-.suggested-recipe-container {
-  margin-top: 2rem;
-  padding: 1.5rem;
-  background-color: var(--bg-primary);
-  border-radius: 0.5rem;
-  border: 1px solid var(--border-color);
-}
-
-.suggested-recipe-container h2 {
-  margin: 0 0 1rem 0;
-  color: var(--text-primary);
-}
-
-.suggested-recipe h3 {
-  margin: 0 0 0.5rem 0;
-  color: var(--text-primary);
-}
-
-.suggested-recipe p {
-  margin: 0;
-  color: var(--text-secondary);
-}
-
-@media (max-width: 768px) {
-  .get-recipe-container {
-    flex-direction: column;
-    text-align: center;
-    gap: 1rem;
-  }
-  
-  .add-ingredient-form > div {
-    flex-direction: column;
-  }
-  
-  .add-ingredient-form input {
-    margin-bottom: 1rem;
-  }
+.navbar-toggle-icon.open {
+  transform: rotate(0deg); /* Remove rotation, use different icon */
 }
 
 /* Mobile Responsive Navbar */
 @media (max-width: 768px) {
-  .navbar-toggle {
-    top: 1rem;
-    left: 1rem;
+  .main-content {
+    margin-left: 0;
+    padding: 1rem;
+    padding-top: 5rem;
+  }
+
+  .main-content.navbar-collapsed {
+    margin-left: 0;
   }
 
   .navbar {
@@ -514,27 +480,8 @@ body {
     transform: translateX(0);
   }
 
-  .navbar-content {
-    padding-top: 5rem; /* Maintain space for toggle button on mobile */
-  }
-
   .navbar-overlay {
     display: block;
-  }
-
-  .main-content {
-    margin-left: 0;
-    padding-top: 5rem; /* Maintain space for toggle button on mobile */
-  }
-
-  .main-content.navbar-collapsed {
-    margin-left: 0;
-  }
-
-  .protected-layout .dark-toggle {
-    top: 1rem;
-    right: 1rem;
-    left: auto;
   }
 }
 
