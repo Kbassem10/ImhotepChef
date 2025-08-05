@@ -85,6 +85,15 @@ const Dashboard = () => {
                     Hello, <strong>{user?.username}</strong>! Ready to cook something amazing?
                 </p>
                 
+                <div style={{ display: 'flex', gap: '1rem', marginBottom: '1.5rem', justifyContent: 'center' }}>
+                    <a href="/recipe-history" className="dashboard-button" style={{ textDecoration: 'none', padding: '0.5rem 1rem' }}>
+                        View Recipe History
+                    </a>
+                    <a href="/profile" className="dashboard-button" style={{ textDecoration: 'none', padding: '0.5rem 1rem' }}>
+                        Profile Settings
+                    </a>
+                </div>
+                
                 <form onSubmit={addIngredient} className="add-ingredient-form">
                     <div style={{ display: 'flex', gap: '1rem', alignItems: 'center' }}>
                         <input

@@ -8,6 +8,7 @@ import Register from './components/auth/Register'
 import ForgotPassword from './components/auth/ForgotPassword'
 import ResetPassword from './components/auth/ResetPassword'
 import Dashboard from './components/main/Dashboard'
+import RecipeHistory from './components/main/RecipeHistory'
 import EmailVerification from './components/auth/EmailVerification'
 import GoogleCallback from './components/auth/GoogleCallback'
 import Profile from './components/Profile'
@@ -129,6 +130,14 @@ function App() {
             element={
               <ProtectedRoute>
                 <Dashboard />
+              </ProtectedRoute>
+            } 
+          />
+          <Route 
+            path="/recipe-history" 
+            element={
+              <ProtectedRoute>
+                <RecipeHistory />
               </ProtectedRoute>
             } 
           />

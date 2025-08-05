@@ -6,7 +6,7 @@ from rest_framework_simplejwt.views import (
 )
 from . import views
 from .auth import register, login, logout, google_auth, forget_password, profile
-from .main import get_recipe
+from .main import get_recipe, get_history
 
 router = DefaultRouter()
 # Add your viewsets here when you create them
@@ -15,24 +15,26 @@ urlpatterns = [
     path('', include(router.urls)),
     #User data endpoint
     path('user-data/', views.user_view, name='user_data'),
-    # Recipe endpoints
+    #User recipe history endpoint
+    path('user-data/recipe/history/', get_history.get_user_history, name='get_user_history'),
+    #Recipe endpoints
     path('recipes/generate/', get_recipe.get_ingredients, name='generate_recipes'),
-    # JWT Authentication endpoints
+    #JWT Authentication endpoints
     path('auth/login/', login.login_view, name='login'),
     path('auth/logout/', logout.logout_view, name='logout'),
     path('auth/register/', register.register_view, name='register'),
     path('auth/verify-email/', register.verify_email, name='verify_email'),
     path('auth/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
     path('auth/token/verify/', TokenVerifyView.as_view(), name='token_verify'),
-    # Password Reset endpoints
+    #Password Reset endpoints
     path('auth/password-reset/', forget_password.password_reset_request, name='password_reset_request'),
     path('auth/password-reset/confirm/', forget_password.password_reset_confirm, name='password_reset_confirm'),
     path('auth/password-reset/validate/', forget_password.password_reset_validate, name='password_reset_validate'),
-    # Google OAuth endpoints
+    #Google OAuth endpoints
     path('auth/google/url/', google_auth.google_login_url, name='google_login_url'),
     path('auth/google/authenticate/', google_auth.google_auth, name='google_auth'),
     path('auth/google/callback/', google_auth.google_callback, name='google_callback'),
-    # Profile endpoints
+    #Profile endpoints
     path('profile/', profile.get_profile, name='get_profile'),
     path('profile/update/', profile.update_profile, name='update_profile'),
     path('profile/change-password/', profile.change_password, name='change_password'),
