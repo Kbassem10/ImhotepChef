@@ -1,6 +1,7 @@
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
 from django.contrib.auth import get_user_model
+from .models import RecipeHistory
 
 User = get_user_model()
 
@@ -45,3 +46,71 @@ class UserAdmin(BaseUserAdmin):
         updated = queryset.update(email_verify=False)
         self.message_user(request, f'{updated} users marked as email unverified.')
     mark_email_unverified.short_description = 'Mark selected users as email unverified'
+
+@admin.register(RecipeHistory)
+class RecipeHistoryAdmin(admin.ModelAdmin):
+    """Admin interface for the RecipeHistory model"""
+    
+    # Fields to display in the recipe list
+    list_display = ('recipe_name', 'user', 'recipe_difficulty', 'servings', 'prep_time', 'cook_time', 'created_at')
+    list_filter = ('recipe_difficulty', 'created_at', 'servings')
+    search_fields = ('recipe_name', 'user__username', 'user__email', 'recipe_description')
+    ordering = ('-created_at',)
+    
+    # Fields to display in the recipe detail view
+    fieldsets = (
+        ('Basic Information', {
+            'fields': ('user', 'recipe_name', 'recipe_description', 'recipe_difficulty')
+        }),
+        ('Timing & Servings', {
+            'fields': ('prep_time', 'cook_time', 'total_time', 'servings')
+        }),
+        ('Ingredients', {
+            'fields': ('main_ingredients', 'additional_ingredients'),
+            'classes': ('collapse',)
+        }),
+        ('Instructions & Tips', {
+            'fields': ('instructions', 'tips'),
+            'classes': ('collapse',)
+        }),
+        ('Nutrition Information', {
+            'fields': ('nutrition',),
+            'classes': ('collapse',)
+        }),
+        ('Metadata', {
+            'fields': ('created_at',),
+            'classes': ('collapse',)
+        }),
+    )
+    
+    # Make created_at read-only
+    readonly_fields = ('created_at',)
+    
+    # Number of recipes per page
+    list_per_page = 25
+    
+    # Add actions for bulk operations
+    actions = ['mark_as_easy', 'mark_as_medium', 'mark_as_hard']
+    
+    def mark_as_easy(self, request, queryset):
+        """Mark selected recipes as Easy difficulty"""
+        updated = queryset.update(recipe_difficulty='Easy')
+        self.message_user(request, f'{updated} recipes marked as Easy.')
+    mark_as_easy.short_description = 'Mark selected recipes as Easy'
+    
+    def mark_as_medium(self, request, queryset):
+        """Mark selected recipes as Medium difficulty"""
+        updated = queryset.update(recipe_difficulty='Medium')
+        self.message_user(request, f'{updated} recipes marked as Medium.')
+    mark_as_medium.short_description = 'Mark selected recipes as Medium'
+    
+    def mark_as_hard(self, request, queryset):
+        """Mark selected recipes as Hard difficulty"""
+        updated = queryset.update(recipe_difficulty='Hard')
+        self.message_user(request, f'{updated} recipes marked as Hard.')
+    mark_as_hard.short_description = 'Mark selected recipes as Hard'
+    
+    # Custom display methods
+    def get_queryset(self, request):
+        """Optimize query by selecting related user data"""
+        return super().get_queryset(request).select_related('user')

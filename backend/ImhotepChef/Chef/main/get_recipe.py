@@ -1,13 +1,13 @@
-from ..models import User
+from ..models import User, RecipeHistory
 from rest_framework import status
 from rest_framework.decorators import api_view, permission_classes
-from rest_framework.permissions import AllowAny
+from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from django.views.decorators.csrf import csrf_exempt
 from ..utils.ai_get_recipe import get_recipe_from_gemini
 
 @api_view(['POST'])
-@permission_classes([AllowAny])
+@permission_classes([IsAuthenticated])
 @csrf_exempt
 def get_ingredients(request):
     try:
@@ -47,12 +47,37 @@ def get_ingredients(request):
         # Get recipes from Gemini AI
         recipe_data, error_message = get_recipe_from_gemini(valid_ingredients)
         
+        # Save recipes to database
+        saved_recipes = []
+        if recipe_data.get('recipes'):
+            for recipe in recipe_data['recipes']:
+                try:
+                    recipe_history = RecipeHistory.objects.create(
+                        user=request.user,
+                        recipe_name=recipe.get('name', 'Untitled Recipe'),
+                        recipe_description=recipe.get('description', ''),
+                        recipe_difficulty=recipe.get('difficulty', 'Easy'),
+                        prep_time=recipe.get('prep_time', ''),
+                        cook_time=recipe.get('cook_time', ''),
+                        total_time=recipe.get('total_time', ''),
+                        servings=recipe.get('servings', 1),
+                        main_ingredients=recipe.get('main_ingredients', []),
+                        additional_ingredients=recipe.get('additional_ingredients', []),
+                        instructions=recipe.get('instructions', []),
+                        tips=recipe.get('tips', []),
+                        nutrition=recipe.get('nutrition', {})
+                    )
+                    saved_recipes.append(recipe_history.id)
+                except Exception as save_error:
+                    print(f"Error saving recipe: {save_error}")
+        
         # Prepare response
         response_data = {
             'success': recipe_data.get('success', True),
             'recipes': recipe_data.get('recipes', []),
             'message': recipe_data.get('message', 'Recipes generated successfully'),
-            'ingredients_used': valid_ingredients
+            'ingredients_used': valid_ingredients,
+            'saved_recipe_ids': saved_recipes
         }
         
         # Add error message if AI failed but fallback was used
