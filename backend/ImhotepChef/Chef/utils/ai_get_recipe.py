@@ -14,7 +14,7 @@ def get_recipe_from_gemini(array_of_ingredients):
     
     # Create the prompt for Gemini
     ingredients_list = ", ".join(array_of_ingredients)
-    
+    print(array_of_ingredients)
     prompt = f'''
 You are a professional chef AI assistant. Create 1 detailed recipe suggestion using the following ingredients: {ingredients_list}
 
