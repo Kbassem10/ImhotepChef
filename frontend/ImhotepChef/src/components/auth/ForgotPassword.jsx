@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
-import '../../App.css';
 
 const ForgotPassword = () => {
   const [email, setEmail] = useState('');
@@ -68,19 +67,35 @@ const ForgotPassword = () => {
 
   if (success) {
     return (
-      <div className="login-container">
-        <div className="login-card">
-          <div className="register-success">
-            <div className="success-icon">
-              ✓
+      <div className="min-h-screen bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50 bg-chef-pattern flex items-center justify-center p-4">
+        {/* Floating decorative elements */}
+        <div className="absolute inset-0 overflow-hidden pointer-events-none">
+          <div className="absolute top-20 left-20 w-32 h-32 bg-blue-200 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-float"></div>
+          <div className="absolute top-40 right-20 w-24 h-24 bg-indigo-200 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-float" style={{animationDelay: '2s'}}></div>
+          <div className="absolute bottom-20 left-40 w-40 h-40 bg-purple-200 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-float" style={{animationDelay: '4s'}}></div>
+        </div>
+
+        <div className="relative w-full max-w-md">
+          <div className="chef-card rounded-3xl p-8 shadow-2xl border border-white/30 backdrop-blur-xl text-center">
+            {/* Success Icon */}
+            <div className="inline-flex items-center justify-center w-20 h-20 bg-green-500 rounded-full mb-6 shadow-lg">
+              <svg className="w-10 h-10 text-white" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z"/>
+                <path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z"/>
+              </svg>
             </div>
-            <h2 className="register-success-title">
-              Email Sent!
+
+            <h2 className="text-3xl font-bold font-chef text-gray-800 mb-4">
+              Check Your Email!
             </h2>
-            <p className="register-success-text">
-              {message}
+            <p className="text-gray-600 font-medium mb-8 leading-relaxed">
+              {message || "We've sent you a password reset link. Please check your email and follow the instructions to reset your password."}
             </p>
-            <Link to="/login" className="register-success-button">
+            
+            <Link 
+              to="/login" 
+              className="chef-button inline-block text-center no-underline"
+            >
               Back to Login
             </Link>
           </div>
@@ -90,53 +105,109 @@ const ForgotPassword = () => {
   }
 
   return (
-    <div className="login-container">
-      <div className="login-card">
-        <div className="login-header">
-          <h2 className="login-title">
-            Reset Your Password
-          </h2>
-          <p className="login-subtitle">
-            Enter your email address and we'll send you a link to reset your password
-          </p>
+    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50 bg-chef-pattern flex items-center justify-center p-4">
+      {/* Floating decorative elements */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+        <div className="absolute top-20 left-20 w-32 h-32 bg-blue-200 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-float"></div>
+        <div className="absolute top-40 right-20 w-24 h-24 bg-indigo-200 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-float" style={{animationDelay: '2s'}}></div>
+        <div className="absolute bottom-20 left-40 w-40 h-40 bg-purple-200 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-float" style={{animationDelay: '4s'}}></div>
+      </div>
+
+      <div className="relative w-full max-w-md">
+        {/* Main Forgot Password Card */}
+        <div className="chef-card rounded-3xl p-8 shadow-2xl border border-white/30 backdrop-blur-xl">
+          {/* Header with Lock Icon */}
+          <div className="text-center mb-8">
+            <div className="inline-flex items-center justify-center w-20 h-20 bg-chef-gradient rounded-full mb-4 shadow-lg">
+              <svg className="w-10 h-10 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 7a2 2 0 012 2m4 0a6 6 0 01-7.743 5.743L11 17H9v2H7v2H4a1 1 0 01-1-1v-2.586a1 1 0 01.293-.707l5.964-5.964A6 6 0 1121 9z" />
+              </svg>
+            </div>
+            <h1 className="text-3xl font-bold font-chef text-gray-800 mb-2">
+              Forgot Password?
+            </h1>
+            <p className="text-gray-600 font-medium leading-relaxed">
+              No worries! Enter your email address and we'll send you a magic link to reset your password
+            </p>
+          </div>
+
+          {/* Error Message */}
+          {error && (
+            <div className="mb-6 p-4 bg-red-50 border border-red-200 rounded-xl">
+              <div className="flex items-center">
+                <svg className="w-5 h-5 text-red-500 mr-3 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                  <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clipRule="evenodd" />
+                </svg>
+                <span className="text-red-700 font-medium text-sm">{error}</span>
+              </div>
+            </div>
+          )}
+
+          {/* Reset Form */}
+          <form onSubmit={handleSubmit} className="space-y-6">
+            <div>
+              <label className="block text-sm font-semibold text-gray-700 mb-2">
+                Email Address
+              </label>
+              <div className="relative">
+                <input
+                  type="email"
+                  value={email}
+                  onChange={handleChange}
+                  required
+                  className="chef-input pl-12"
+                  placeholder="Enter your email address"
+                />
+                <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                  <svg className="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M16 12a4 4 0 10-8 0 4 4 0 008 0zm0 0v1.5a2.5 2.5 0 005 0V12a9 9 0 10-9 9m4.5-1.206a8.959 8.959 0 01-4.5 1.207" />
+                  </svg>
+                </div>
+              </div>
+            </div>
+
+            <button
+              type="submit"
+              disabled={loading}
+              className="chef-button"
+            >
+              {loading ? (
+                <div className="flex items-center justify-center">
+                  <svg className="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                    <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                    <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                  </svg>
+                  Sending Magic Link...
+                </div>
+              ) : (
+                <div className="flex items-center justify-center">
+                  <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8" />
+                  </svg>
+                  Send Reset Link
+                </div>
+              )}
+            </button>
+          </form>
+
+          {/* Footer */}
+          <div className="mt-8 text-center">
+            <p className="text-gray-600">
+              Remember your password?{' '}
+              <Link 
+                to="/login" 
+                className="text-primary-600 hover:text-primary-700 font-semibold transition-colors hover:underline"
+              >
+                Back to Login
+              </Link>
+            </p>
+          </div>
         </div>
-        
-        {error && (
-          <div className="login-error">
-            {error}
-          </div>
-        )}
 
-        <form onSubmit={handleSubmit} className="login-form">
-          <div className="login-field">
-            <label className="login-label">
-              Email Address
-            </label>
-            <input
-              type="email"
-              value={email}
-              onChange={handleChange}
-              required
-              className="login-input"
-              placeholder="Enter your email"
-            />
-          </div>
-
-          <button
-            type="submit"
-            disabled={loading}
-            className="login-button"
-          >
-            {loading ? 'Sending...' : 'Send Reset Link'}
-          </button>
-        </form>
-
-        <div className="login-footer">
-          <p className="login-footer-text">
-            Remember your password?{' '}
-            <Link to="/login" className="login-link">
-              Back to Login
-            </Link>
+        {/* Bottom decorative text */}
+        <div className="text-center mt-8">
+          <p className="text-gray-500 text-sm font-medium">
+            🔐 Your account security is our priority 🔐
           </p>
         </div>
       </div>

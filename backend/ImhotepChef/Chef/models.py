@@ -1,6 +1,8 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
 from django.utils.translation import gettext_lazy as _
+from django.utils import timezone
+from datetime import timedelta
 
 class User(AbstractUser):
     """
@@ -8,6 +10,12 @@ class User(AbstractUser):
     """
     
     email_verify = models.BooleanField(default=False, verbose_name="Email Verified")
+    
+    def get_recipes_last_month_count(self):
+        """Calculate the number of recipes created by this user in the current calendar month"""
+        now = timezone.now()
+        current_month_start = now.replace(day=1, hour=0, minute=0, second=0, microsecond=0)
+        return self.user_recipe_history.filter(created_at__gte=current_month_start).count()
     
     def __str__(self):
         return f"{self.username} ({self.email})"

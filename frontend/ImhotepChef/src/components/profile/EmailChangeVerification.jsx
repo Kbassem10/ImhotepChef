@@ -2,23 +2,24 @@ import { useState, useEffect } from 'react';
 import { useParams, useNavigate, Link } from 'react-router-dom';
 import axios from 'axios';
 
-const EmailVerification = () => {
-  const { uid, token } = useParams();
+const EmailChangeVerification = () => {
+  const { uid, token, new_email } = useParams();
   const navigate = useNavigate();
   const [status, setStatus] = useState('verifying'); // 'verifying', 'success', 'error'
   const [message, setMessage] = useState('');
   const [countdown, setCountdown] = useState(10);
 
   useEffect(() => {
-    const verifyEmail = async () => {
+    const verifyEmailChange = async () => {
       try {
-        const response = await axios.post('/api/auth/verify-email/', {
+        const response = await axios.post('/api/profile/verify-email-change/', {
           uid,
           token,
+          new_email: new_email, // This is already the encoded email from URL params
         });
         
         setStatus('success');
-        setMessage('Your email has been verified successfully!');
+        setMessage('Your email has been changed successfully!');
         
         // Start countdown
         const timer = setInterval(() => {
@@ -26,7 +27,7 @@ const EmailVerification = () => {
             if (prev <= 1) {
               clearInterval(timer);
               navigate('/login', { 
-                state: { message: 'Email verified! You can now log in.' }
+                state: { message: 'Email changed successfully! Please log in again.' }
               });
               return 0;
             }
@@ -45,24 +46,24 @@ const EmailVerification = () => {
       }
     };
 
-    if (uid && token) {
-      verifyEmail();
+    if (uid && token && new_email) {
+      verifyEmailChange();
     } else {
       setStatus('error');
       setMessage('Invalid verification link.');
     }
-  }, [uid, token, navigate]);
+  }, [uid, token, new_email, navigate]);
 
   const getBackgroundGradient = () => {
     switch (status) {
       case 'verifying':
-        return 'from-blue-50 via-indigo-50 to-purple-50';
+        return 'from-cyan-50 via-blue-50 to-indigo-50';
       case 'success':
-        return 'from-green-50 via-emerald-50 to-teal-50';
+        return 'from-emerald-50 via-green-50 to-teal-50';
       case 'error':
-        return 'from-red-50 via-rose-50 to-pink-50';
+        return 'from-red-50 via-orange-50 to-pink-50';
       default:
-        return 'from-blue-50 via-indigo-50 to-purple-50';
+        return 'from-cyan-50 via-blue-50 to-indigo-50';
     }
   };
 
@@ -71,16 +72,16 @@ const EmailVerification = () => {
       case 'verifying':
         return (
           <>
-            <div className="absolute top-20 left-20 w-32 h-32 bg-blue-200 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-float"></div>
-            <div className="absolute top-40 right-20 w-24 h-24 bg-indigo-200 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-float" style={{animationDelay: '2s'}}></div>
-            <div className="absolute bottom-20 left-40 w-40 h-40 bg-purple-200 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-float" style={{animationDelay: '4s'}}></div>
+            <div className="absolute top-20 left-20 w-32 h-32 bg-cyan-200 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-float"></div>
+            <div className="absolute top-40 right-20 w-24 h-24 bg-blue-200 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-float" style={{animationDelay: '2s'}}></div>
+            <div className="absolute bottom-20 left-40 w-40 h-40 bg-indigo-200 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-float" style={{animationDelay: '4s'}}></div>
           </>
         );
       case 'success':
         return (
           <>
-            <div className="absolute top-20 left-20 w-32 h-32 bg-green-200 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-float"></div>
-            <div className="absolute top-40 right-20 w-24 h-24 bg-emerald-200 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-float" style={{animationDelay: '2s'}}></div>
+            <div className="absolute top-20 left-20 w-32 h-32 bg-emerald-200 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-float"></div>
+            <div className="absolute top-40 right-20 w-24 h-24 bg-green-200 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-float" style={{animationDelay: '2s'}}></div>
             <div className="absolute bottom-20 left-40 w-40 h-40 bg-teal-200 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-float" style={{animationDelay: '4s'}}></div>
           </>
         );
@@ -88,7 +89,7 @@ const EmailVerification = () => {
         return (
           <>
             <div className="absolute top-20 left-20 w-32 h-32 bg-red-200 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-float"></div>
-            <div className="absolute top-40 right-20 w-24 h-24 bg-rose-200 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-float" style={{animationDelay: '2s'}}></div>
+            <div className="absolute top-40 right-20 w-24 h-24 bg-orange-200 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-float" style={{animationDelay: '2s'}}></div>
             <div className="absolute bottom-20 left-40 w-40 h-40 bg-pink-200 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-float" style={{animationDelay: '4s'}}></div>
           </>
         );
@@ -111,8 +112,8 @@ const EmailVerification = () => {
       case 'success':
         return (
           <div className="inline-flex items-center justify-center w-20 h-20 bg-green-500 rounded-full mb-6 shadow-lg animate-pulse-slow">
-            <svg className="w-10 h-10 text-white" fill="currentColor" viewBox="0 0 24 24">
-              <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+            <svg className="w-10 h-10 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3 8l7.89 1.26a2 2 0 001.28-.74L15 5.26a2 2 0 011.28-.74L21 4m-18 8l7.89 1.26a2 2 0 001.28-.74L15 9.26a2 2 0 011.28-.74L21 8m-18 8l7.89 1.26a2 2 0 001.28-.74L15 13.26a2 2 0 011.28-.74L21 12" />
             </svg>
           </div>
         );
@@ -132,22 +133,24 @@ const EmailVerification = () => {
   const getTitle = () => {
     switch (status) {
       case 'verifying':
-        return 'Verifying Your Email...';
+        return 'Updating Your Profile...';
       case 'success':
-        return 'Welcome to the Kitchen!';
+        return 'Email Updated Successfully!';
       case 'error':
-        return 'Verification Failed';
+        return 'Update Failed';
       default:
         return '';
     }
   };
 
   const getSubtitle = () => {
+    const decodedEmail = new_email ? decodeURIComponent(new_email) : '';
+    
     switch (status) {
       case 'verifying':
-        return 'Please wait while we verify your email address and prepare your chef station...';
+        return `Please wait while we update your email address${decodedEmail ? ` to ${decodedEmail}` : ''}...`;
       case 'success':
-        return 'Your email has been verified successfully! You can now log in and start your AI-powered culinary journey.';
+        return `Your email address has been successfully updated${decodedEmail ? ` to ${decodedEmail}` : ''}. For security reasons, please log in again with your new email.`;
       case 'error':
         return message;
       default:
@@ -155,36 +158,14 @@ const EmailVerification = () => {
     }
   };
 
-  const getButtonText = () => {
-    switch (status) {
-      case 'success':
-        return 'Start Cooking';
-      case 'error':
-        return 'Try Again';
-      default:
-        return null;
-    }
-  };
-
-  const getButtonLink = () => {
-    switch (status) {
-      case 'success':
-        return '/login';
-      case 'error':
-        return '/register';
-      default:
-        return '/';
-    }
-  };
-
   const getBottomMessage = () => {
     switch (status) {
       case 'verifying':
-        return '⏳ Setting up your culinary workspace ⏳';
+        return '📧 Securing your new email address 📧';
       case 'success':
-        return '🎉 Ready to create amazing recipes with AI 🎉';
+        return '🔐 Email updated! Please log in again for security 🔐';
       case 'error':
-        return '💡 Need help? Contact our support team 💡';
+        return '💡 Having trouble? Try updating your email again 💡';
       default:
         return '';
     }
@@ -219,10 +200,10 @@ const EmailVerification = () => {
           {status !== 'verifying' && (
             <div className="mb-6">
               <Link 
-                to={getButtonLink()}
+                to="/login"
                 className="chef-button inline-block text-center no-underline"
               >
-                {getButtonText()}
+                {status === 'success' ? 'Log In Again' : 'Go to Login'}
               </Link>
             </div>
           )}
@@ -245,9 +226,26 @@ const EmailVerification = () => {
           {status === 'verifying' && (
             <div className="mt-6">
               <div className="w-full bg-gray-200 rounded-full h-2">
-                <div className="bg-chef-gradient h-2 rounded-full animate-pulse" style={{width: '70%'}}></div>
+                <div className="bg-chef-gradient h-2 rounded-full animate-pulse" style={{width: '80%'}}></div>
               </div>
-              <p className="text-gray-500 text-sm mt-2">Processing verification...</p>
+              <p className="text-gray-500 text-sm mt-2">Updating email address...</p>
+            </div>
+          )}
+
+          {/* Security notice for success state */}
+          {status === 'success' && (
+            <div className="mt-6 p-4 bg-blue-50 border border-blue-200 rounded-xl">
+              <div className="flex items-start">
+                <svg className="w-5 h-5 text-blue-500 mr-3 mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                  <path fillRule="evenodd" d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z" clipRule="evenodd" />
+                </svg>
+                <div className="text-left">
+                  <p className="text-blue-700 font-medium text-sm">Security Notice</p>
+                  <p className="text-blue-600 text-sm mt-1">
+                    For your account security, you'll need to log in again using your new email address.
+                  </p>
+                </div>
+              </div>
             </div>
           )}
 
@@ -255,15 +253,14 @@ const EmailVerification = () => {
           {status === 'error' && (
             <div className="mt-6 text-center">
               <p className="text-gray-600 text-sm mb-4">
-                If you continue to experience issues, please{' '}
-                <Link 
-                  to="/register" 
-                  className="text-primary-600 hover:text-primary-700 font-semibold transition-colors hover:underline"
-                >
-                  register again
-                </Link>
-                {' '}or contact support.
+                If you continue to experience issues, please try updating your email from your profile settings or contact support.
               </p>
+              <Link 
+                to="/profile" 
+                className="text-primary-600 hover:text-primary-700 font-semibold transition-colors hover:underline text-sm"
+              >
+                Go to Profile Settings
+              </Link>
             </div>
           )}
         </div>
@@ -279,4 +276,4 @@ const EmailVerification = () => {
   );
 };
 
-export default EmailVerification;
+export default EmailChangeVerification;

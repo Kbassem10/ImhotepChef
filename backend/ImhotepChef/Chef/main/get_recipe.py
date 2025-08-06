@@ -78,6 +78,14 @@ def get_ingredients(request):
         else:
             # Get new recipes from Gemini AI
             print("Generating new recipes from AI...")
+
+            #Check if the user have used more the 30 AI responses this month
+            if request.user.get_recipes_last_month_count() >= 30:
+                return Response(
+                    {'error': 'You have a maximum of 30 Recipes to be Generated each month'}, 
+                    status=status.HTTP_400_BAD_REQUEST
+                )
+            
             recipe_data, error_message = get_recipe_from_gemini(valid_ingredients)
             
             # Update main_ingredients in recipe data to use sorted ingredients

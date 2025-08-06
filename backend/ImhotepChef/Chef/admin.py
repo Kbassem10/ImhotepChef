@@ -10,7 +10,7 @@ class UserAdmin(BaseUserAdmin):
     """Admin interface for the custom User model"""
     
     # Fields to display in the user list
-    list_display = ('username', 'email', 'first_name', 'last_name', 'email_verify', 'is_staff', 'date_joined')
+    list_display = ('username', 'email', 'first_name', 'last_name', 'email_verify', 'recipes_last_month', 'is_staff', 'date_joined')
     list_filter = ('email_verify', 'is_staff', 'is_superuser', 'is_active', 'date_joined')
     search_fields = ('username', 'email', 'first_name', 'last_name')
     ordering = ('-date_joined',)
@@ -19,6 +19,9 @@ class UserAdmin(BaseUserAdmin):
     fieldsets = BaseUserAdmin.fieldsets + (
         ('Email Verification', {
             'fields': ('email_verify',)
+        }),
+        ('Recipe Statistics', {
+            'fields': ('recipe_count_this_month',)
         }),
     )
     
@@ -46,6 +49,16 @@ class UserAdmin(BaseUserAdmin):
         updated = queryset.update(email_verify=False)
         self.message_user(request, f'{updated} users marked as email unverified.')
     mark_email_unverified.short_description = 'Mark selected users as email unverified'
+    
+    def recipes_last_month(self, obj):
+        """Display the number of recipes created by the user in the current calendar month"""
+        return obj.get_recipes_last_month_count()
+    recipes_last_month.short_description = 'Recipes (This Month)'
+    recipes_last_month.admin_order_field = 'recipe_count_last_month'
+    
+    def get_queryset(self, request):
+        """Optimize query by prefetching recipe history"""
+        return super().get_queryset(request).prefetch_related('user_recipe_history')
 
 @admin.register(RecipeHistory)
 class RecipeHistoryAdmin(admin.ModelAdmin):

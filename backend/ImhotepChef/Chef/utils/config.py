@@ -38,7 +38,7 @@ class Gemini_Config:
         ]
         
         model = genai.GenerativeModel(
-            model_name="gemini-1.5-flash",
+            model_name="gemini-2.0-flash",
             generation_config=generation_config,
             safety_settings=safety_settings
         )
