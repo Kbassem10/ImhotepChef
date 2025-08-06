@@ -15,6 +15,7 @@ urlpatterns = [
     path('', include(router.urls)),
     #User data endpoint
     path('user-data/', views.user_view, name='user_data'),
+    path('user-data/usage-count/', views.get_user_usage_count, name='user_recipe_count'),
     #User recipe history endpoint
     path('user-data/recipe/history/', get_history.get_user_history, name='get_user_history'),
     #Recipe endpoints

@@ -3,6 +3,7 @@ import { useAuth } from '../../contexts/AuthContext';
 import IngredientsList from './components/IngredientsList';
 import axios from 'axios';
 import ImhotepRecipe from './components/ImhotepRecipe';
+import RecipeCount from '../common/RecipeCount';
 
 const Dashboard = () => {
     const { user } = useAuth();
@@ -84,6 +85,19 @@ const Dashboard = () => {
                 <p className="dashboard-subtitle">
                     Hello, <strong>{user?.username}</strong>! Ready to cook something amazing?
                 </p>
+                
+                {/* Recipe Count Stats */}
+                <div style={{ 
+                    display: 'flex', 
+                    justifyContent: 'center', 
+                    marginBottom: '1rem' 
+                }}>
+                    <RecipeCount 
+                        variant="badge" 
+                        showLabel={true}
+                        className="dashboard-recipe-count"
+                    />
+                </div>
                 
                 <div style={{ display: 'flex', gap: '1rem', marginBottom: '1.5rem', justifyContent: 'center' }}>
                     <a href="/recipe-history" className="dashboard-button" style={{ textDecoration: 'none', padding: '0.5rem 1rem' }}>

@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useAuth } from '../contexts/AuthContext';
 import { Link, useLocation } from 'react-router-dom';
+import RecipeCount from './common/RecipeCount';
 
 const Navbar = ({ onToggle }) => {
   const { user, logout } = useAuth();
@@ -93,6 +94,11 @@ const Navbar = ({ onToggle }) => {
               {!user?.email_verify && (
                 <span className="navbar-unverified">Email not verified</span>
               )}
+              <RecipeCount 
+                variant="navbar" 
+                showLabel={false}
+                className="navbar-recipe-count"
+              />
             </div>
           </div>
 

@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { useAuth } from '../contexts/AuthContext';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
+import RecipeCount from './common/RecipeCount';
 import '../App.css';
 
 const Profile = () => {
@@ -130,6 +131,19 @@ const Profile = () => {
               Logout
             </button>
           </div>
+        </div>
+
+        {/* Recipe Count Stats */}
+        <div style={{ 
+          display: 'flex', 
+          justifyContent: 'center', 
+          marginBottom: '1.5rem' 
+        }}>
+          <RecipeCount 
+            variant="card" 
+            showLabel={true}
+            className="profile-recipe-count"
+          />
         </div>
 
         <div className="profile-tabs">
