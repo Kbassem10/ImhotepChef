@@ -16,15 +16,16 @@ def get_recipe_from_gemini(array_of_ingredients):
     ingredients_list = ", ".join(array_of_ingredients)
     
     prompt = f'''
-You are a professional chef AI assistant. Create 3 detailed recipe suggestions using the following ingredients: {ingredients_list}
+You are a professional chef AI assistant. Create 1 detailed recipe suggestion using the following ingredients: {ingredients_list}
 
 Requirements:
-1. Each recipe should use at least 3 of the provided ingredients
-2. Include additional common ingredients if needed
-3. Provide detailed cooking instructions
-4. Include preparation and cooking times
-5. Specify serving size
-6. Add difficulty level (Easy, Medium, Hard)
+1. Use as many of the provided ingredients as possible (at least 3)
+2. Minimize additional ingredients - only add essential ones that are commonly found in most kitchens
+3. Focus on simple, practical cooking techniques
+4. Provide detailed cooking instructions
+5. Include preparation and cooking times
+6. Specify serving size
+7. Add difficulty level (Easy, Medium, Hard)
 
 Please respond with a valid JSON format following this exact structure:
 
@@ -65,10 +66,10 @@ Please respond with a valid JSON format following this exact structure:
         }}
     ],
     "success": true,
-    "message": "Recipes generated successfully"
+    "message": "Recipe generated successfully"
 }}
 
-Make sure the JSON is properly formatted and valid. Focus on creating practical, delicious recipes that highlight the provided ingredients.
+IMPORTANT: Keep additional ingredients to a minimum (maximum 5 items). Only include basic pantry staples like salt, pepper, oil, garlic, onion if absolutely necessary. Make sure the JSON is properly formatted and valid.
 '''
 
     error_message = None
