@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import Footer from '../common/Footer';
+import ImhotepChefLogo from '../../assets/ImhotepChef.png';
 
 function LandingPage() {
   const [currentFeature, setCurrentFeature] = useState(0);
@@ -52,8 +53,12 @@ function LandingPage() {
           <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl">
             {/* Hero Header */}
             <div className="text-center mb-16">
-              <div className="inline-block p-4 bg-gradient-to-r from-orange-500 to-red-500 rounded-full mb-6 shadow-2xl transform hover:scale-105 transition-all duration-300">
-                <span className="text-6xl">🍳</span>
+              <div className="inline-block p-4 bg-white rounded-full mb-6 shadow-2xl transform hover:scale-105 transition-all duration-300 border border-gray-100">
+                <img 
+                  src={ImhotepChefLogo} 
+                  alt="ImhotepChef Logo" 
+                  className="w-16 h-16 object-contain"
+                />
               </div>
               
               <h1 className="text-5xl sm:text-6xl lg:text-7xl font-bold text-gray-900 mb-6 leading-tight">
@@ -235,7 +240,13 @@ function LandingPage() {
         <section className="relative z-10 py-20">
           <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-4xl text-center">
             <div className="chef-card bg-white/80 backdrop-blur-sm p-12 rounded-3xl shadow-2xl border border-orange-100">
-              <div className="text-6xl mb-6">👨‍🍳</div>
+              <div className="flex justify-center mb-6">
+                <img 
+                  src={ImhotepChefLogo} 
+                  alt="ImhotepChef Logo" 
+                  className="w-20 h-20 object-contain"
+                />
+              </div>
               <h2 className="text-4xl lg:text-5xl font-bold text-gray-900 mb-6">
                 Ready to Become a Kitchen <span className="text-orange-600">Master</span>?
               </h2>

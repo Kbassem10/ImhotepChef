@@ -3,6 +3,7 @@ import { useAuth } from '../../contexts/AuthContext';
 import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import Footer from '../common/Footer';
+import ImhotepChefLogo from '../../assets/ImhotepChef.png';
 
 const Register = () => {
   const [formData, setFormData] = useState({
@@ -152,10 +153,12 @@ const Register = () => {
         <div className="chef-card rounded-3xl p-8 shadow-2xl border border-white/30 backdrop-blur-xl">
           {/* Header with Chef Icon */}
           <div className="text-center mb-8">
-            <div className="inline-flex items-center justify-center w-20 h-20 bg-chef-gradient rounded-full mb-4 shadow-lg">
-              <svg className="w-10 h-10 text-white" fill="currentColor" viewBox="0 0 24 24">
-                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
-              </svg>
+            <div className="inline-flex items-center justify-center w-20 h-20 bg-white rounded-full mb-4 shadow-lg border border-gray-100">
+              <img 
+                src={ImhotepChefLogo} 
+                alt="ImhotepChef Logo" 
+                className="w-14 h-14 object-contain"
+              />
             </div>
             <h1 className="text-3xl font-bold font-chef text-gray-800 mb-2">
               Join Our Kitchen!
