@@ -4,6 +4,7 @@ import IngredientsList from './components/IngredientsList';
 import axios from 'axios';
 import ImhotepRecipe from './components/ImhotepRecipe';
 import RecipeCount from '../common/RecipeCount';
+import Footer from '../common/Footer';
 
 const Dashboard = () => {
     const { user } = useAuth();
@@ -305,6 +306,7 @@ const Dashboard = () => {
                     </div>
                 )}
             </div>
+            <Footer />
         </div>
     );
 };

@@ -1,3 +1,4 @@
+//The main purpose of this file is to redirect the authorized uses from this route automatically to there dashboard
 import { useAuth } from '../contexts/AuthContext';
 import { Navigate } from 'react-router-dom';
 

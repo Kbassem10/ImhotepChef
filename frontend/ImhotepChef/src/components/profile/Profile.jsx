@@ -3,6 +3,7 @@ import { useAuth } from '../../contexts/AuthContext';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 import RecipeCount from '../common/RecipeCount';
+import Footer from '../common/Footer';
 
 const Profile = () => {
   const { user, logout, updateUser } = useAuth();
@@ -531,6 +532,7 @@ const Profile = () => {
           </div>
         )}
       </div>
+      <Footer />
     </div>
   );
 };

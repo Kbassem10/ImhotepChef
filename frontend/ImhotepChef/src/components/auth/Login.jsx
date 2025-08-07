@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { useAuth } from '../../contexts/AuthContext';
 import { useNavigate, Link } from 'react-router-dom';
 import axios from 'axios';
+import Footer from '../common/Footer';
 
 const Login = () => {
   const [formData, setFormData] = useState({
@@ -113,7 +114,7 @@ const Login = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-orange-50 via-amber-50 to-green-50 bg-chef-pattern flex items-center justify-center p-4">
+    <div className="min-h-screen bg-gradient-to-br from-orange-50 via-amber-50 to-green-50 bg-chef-pattern">
       {/* Floating decorative elements */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
         <div className="absolute top-20 left-20 w-32 h-32 bg-primary-200 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-float"></div>
@@ -121,7 +122,8 @@ const Login = () => {
         <div className="absolute bottom-20 left-40 w-40 h-40 bg-yellow-200 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-float" style={{animationDelay: '4s'}}></div>
       </div>
 
-      <div className="relative w-full max-w-md">
+      <div className="flex items-center justify-center min-h-screen p-4">
+        <div className="relative w-full max-w-md">
         {/* Main Login Card */}
         <div className="chef-card rounded-3xl p-8 shadow-2xl border border-white/30 backdrop-blur-xl">
           {/* Header with Chef Icon */}
@@ -296,7 +298,9 @@ const Login = () => {
             🍳 Where AI meets culinary excellence 🍳
           </p>
         </div>
+        </div>
       </div>
+      <Footer />
     </div>
   );
 };

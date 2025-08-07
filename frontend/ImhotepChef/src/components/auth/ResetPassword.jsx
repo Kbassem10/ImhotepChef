@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Link, useSearchParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import Footer from '../common/Footer';
 
 const ResetPassword = () => {
   const [formData, setFormData] = useState({
@@ -252,7 +253,7 @@ const ResetPassword = () => {
 
   if (success) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-green-50 via-emerald-50 to-teal-50 bg-chef-pattern flex items-center justify-center p-4">
+      <div className="min-h-screen bg-gradient-to-br from-green-50 via-emerald-50 to-teal-50 bg-chef-pattern">
         {/* Floating decorative elements */}
         <div className="absolute inset-0 overflow-hidden pointer-events-none">
           <div className="absolute top-20 left-20 w-32 h-32 bg-green-200 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-float"></div>
@@ -260,63 +261,66 @@ const ResetPassword = () => {
           <div className="absolute bottom-20 left-40 w-40 h-40 bg-teal-200 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-float" style={{animationDelay: '4s'}}></div>
         </div>
 
-        <div className="relative w-full max-w-md">
-          <div className="chef-card rounded-3xl p-8 shadow-2xl border border-white/30 backdrop-blur-xl text-center">
-            {/* Success Icon */}
-            <div className="inline-flex items-center justify-center w-20 h-20 bg-green-500 rounded-full mb-6 shadow-lg animate-pulse-slow">
-              <svg className="w-10 h-10 text-white" fill="currentColor" viewBox="0 0 24 24">
-                <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
-              </svg>
-            </div>
-            
-            <h2 className="text-3xl font-bold font-chef text-gray-800 mb-4">
-              Password Reset Successful!
-            </h2>
-            <p className="text-gray-600 font-medium mb-8 leading-relaxed">
-              Your password has been successfully reset. You can now login with your new password and start cooking amazing recipes!
-            </p>
-            
-            <div className="mb-6 p-4 bg-green-50 border border-green-200 rounded-xl">
-              <div className="flex items-start">
-                <svg className="w-5 h-5 text-green-500 mr-3 mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
-                  <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+        <div className="flex items-center justify-center min-h-screen p-4">
+          <div className="relative w-full max-w-md">
+            <div className="chef-card rounded-3xl p-8 shadow-2xl border border-white/30 backdrop-blur-xl text-center">
+              {/* Success Icon */}
+              <div className="inline-flex items-center justify-center w-20 h-20 bg-green-500 rounded-full mb-6 shadow-lg animate-pulse-slow">
+                <svg className="w-10 h-10 text-white" fill="currentColor" viewBox="0 0 24 24">
+                  <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
                 </svg>
-                <div className="text-left">
-                  <p className="text-green-700 font-medium text-sm">Password Updated Successfully</p>
-                  <p className="text-green-600 text-sm mt-1">
-                    Your new password is now active and secure. Welcome back to your culinary journey!
-                  </p>
+              </div>
+              
+              <h2 className="text-3xl font-bold font-chef text-gray-800 mb-4">
+                Password Reset Successful!
+              </h2>
+              <p className="text-gray-600 font-medium mb-8 leading-relaxed">
+                Your password has been successfully reset. You can now login with your new password and start cooking amazing recipes!
+              </p>
+              
+              <div className="mb-6 p-4 bg-green-50 border border-green-200 rounded-xl">
+                <div className="flex items-start">
+                  <svg className="w-5 h-5 text-green-500 mr-3 mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                    <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+                  </svg>
+                  <div className="text-left">
+                    <p className="text-green-700 font-medium text-sm">Password Updated Successfully</p>
+                    <p className="text-green-600 text-sm mt-1">
+                      Your new password is now active and secure. Welcome back to your culinary journey!
+                    </p>
+                  </div>
                 </div>
+              </div>
+              
+              <Link 
+                to="/login" 
+                className="chef-button bg-gradient-to-r from-green-500 to-teal-500 hover:from-green-600 hover:to-teal-600 text-white w-full"
+              >
+                Continue to Login
+              </Link>
+              
+              <div className="mt-6 pt-4 border-t border-gray-200">
+                <p className="text-gray-500 text-xs">
+                  🔐 Your password is encrypted and secure 🔐
+                </p>
               </div>
             </div>
             
-            <Link 
-              to="/login" 
-              className="chef-button bg-gradient-to-r from-green-500 to-teal-500 hover:from-green-600 hover:to-teal-600 text-white w-full"
-            >
-              Continue to Login
-            </Link>
-            
-            <div className="mt-6 pt-4 border-t border-gray-200">
-              <p className="text-gray-500 text-xs">
-                🔐 Your password is encrypted and secure 🔐
+            {/* Bottom decorative text */}
+            <div className="text-center mt-8">
+              <p className="text-gray-500 text-sm font-medium">
+                🎉 Ready to create amazing recipes! 🎉
               </p>
             </div>
           </div>
-          
-          {/* Bottom decorative text */}
-          <div className="text-center mt-8">
-            <p className="text-gray-500 text-sm font-medium">
-              🎉 Ready to create amazing recipes! 🎉
-            </p>
-          </div>
         </div>
+        <Footer />
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-purple-50 via-indigo-50 to-blue-50 bg-chef-pattern flex items-center justify-center p-4">
+    <div className="min-h-screen bg-gradient-to-br from-purple-50 via-indigo-50 to-blue-50 bg-chef-pattern">
       {/* Floating decorative elements */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
         <div className="absolute top-20 left-20 w-32 h-32 bg-purple-200 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-float"></div>
@@ -324,7 +328,8 @@ const ResetPassword = () => {
         <div className="absolute bottom-20 left-40 w-40 h-40 bg-blue-200 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-float" style={{animationDelay: '4s'}}></div>
       </div>
 
-      <div className="relative w-full max-w-md">
+      <div className="flex items-center justify-center min-h-screen p-4">
+        <div className="relative w-full max-w-md">
         {/* Main Reset Password Card */}
         <div className="chef-card rounded-3xl p-8 shadow-2xl border border-white/30 backdrop-blur-xl">
           {/* Header */}
@@ -521,7 +526,9 @@ const ResetPassword = () => {
             🔐 Secure Password Reset • Chef-Level Security 🔐
           </p>
         </div>
+        </div>
       </div>
+      <Footer />
     </div>
   );
 };
