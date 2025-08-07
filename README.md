@@ -92,12 +92,20 @@ cat > .env << 'EOF'
 # Gemini API Keys (Required - Get from https://aistudio.google.com/app/apikey)
 GEMINI_API_KEY_1=your_first_gemini_api_key_here
 GEMINI_API_KEY_2=your_second_gemini_api_key_here
+EOF
+
+# Also set up frontend environment variables
+cd ../../frontend/ImhotepChef
+cp ../env.example .env
+# Edit .env if needed - default VITE_API_URL=http://localhost:8000 should work
 
 # Return to project root
 cd ../..
 ```
 
 > 🚨 **Important**: You must have at least **1 Gemini API key** and up to **2 API keys** for the AI recipe generation to work. Get your free API keys from [Google AI Studio](https://aistudio.google.com/app/apikey).
+
+> 📝 **Note**: The frontend `.env` file should contain `VITE_API_URL=http://localhost:8000` to match the Docker backend port.
 
 **3. Launch the Magic** ✨
 ```bash
@@ -204,11 +212,17 @@ cd frontend/ImhotepChef
 npm install
 
 # 🌐 Create environment variables (create .env file)
+# IMPORTANT: Make sure this port matches your Django backend port (8000)
 echo "VITE_API_URL=http://localhost:8000" > .env
+
+# Alternative: Copy from example and edit
+# cp ../env.example .env
 
 # 🚀 Start development server
 npm run dev
 ```
+
+> 🚨 **Important**: The `VITE_API_URL` must point to your Django backend server. Default is `http://localhost:8000`. Make sure your Django server is running on port 8000 with `python manage.py runserver`.
 
 #### 5️⃣ **Access the Application**
 
@@ -225,16 +239,25 @@ npm run dev
 # Terminal 1 - Backend
 cd backend/ImhotepChef
 source venv/bin/activate
-python manage.py runserver
+python manage.py runserver  # This runs on port 8000
 
 # Terminal 2 - Frontend  
 cd frontend/ImhotepChef
+# Make sure .env file exists with VITE_API_URL=http://localhost:8000
 npm run dev
 ```
 
 **⏹️ Stopping the application:**
 - Press `Ctrl+C` in both terminals
 - Deactivate virtual environment: `deactivate`
+
+**🔧 Environment File Setup:**
+```bash
+# Frontend environment setup (if not done during initial setup)
+cd frontend/ImhotepChef
+cp ../env.example .env
+# Edit .env to ensure VITE_API_URL=http://localhost:8000
+```
 
 ---
 
@@ -298,6 +321,21 @@ brew services stop postgresql   # macOS
 | 🗄️ **Database connection timeout** | Wait for health check to complete |
 | 📱 **Frontend not loading** | Check if port 3000 is available |
 | ⚡ **Hot reload not working** | Restart container with `docker compose restart` |
+| 🔧 **API calls failing** | Verify frontend `.env` has `VITE_API_URL=http://localhost:8000` |
+| 🔑 **Environment variables not working** | Ensure both backend and frontend `.env` files are created |
+| 🌐 **Backend port issues** | Confirm Django is running on port 8000 (check docker-compose.yml) |
+
+### 📝 Environment Configuration Notes
+
+**For Docker Setup:**
+- Backend runs on: `http://localhost:8000`
+- Frontend runs on: `http://localhost:3000`
+- Frontend `.env` should have: `VITE_API_URL=http://localhost:8000`
+
+**For Manual Setup:**
+- Copy `frontend/.env.example` to `frontend/ImhotepChef/.env`
+- Ensure Django runs with: `python manage.py runserver` (port 8000)
+- Verify frontend `.env` points to correct backend port
 
 ---
 
