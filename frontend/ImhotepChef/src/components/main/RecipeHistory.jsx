@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { useAuth } from '../../contexts/AuthContext';
 import axios from 'axios';
 import ImhotepRecipe from './components/ImhotepRecipe';
+import Footer from '../common/Footer';
 
 const RecipeHistory = () => {
     const { user } = useAuth();
@@ -477,6 +478,7 @@ const RecipeHistory = () => {
                 {/* Pagination controls at bottom */}
                 <PaginationControls />
             </div>
+            <Footer />
         </div>
     );
 };

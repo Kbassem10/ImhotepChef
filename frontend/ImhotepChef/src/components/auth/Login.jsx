@@ -2,6 +2,8 @@ import { useState } from 'react';
 import { useAuth } from '../../contexts/AuthContext';
 import { useNavigate, Link } from 'react-router-dom';
 import axios from 'axios';
+import Footer from '../common/Footer';
+import ImhotepChefLogo from '../../assets/ImhotepChef.png';
 
 const Login = () => {
   const [formData, setFormData] = useState({
@@ -113,7 +115,7 @@ const Login = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-orange-50 via-amber-50 to-green-50 bg-chef-pattern flex items-center justify-center p-4">
+    <div className="min-h-screen bg-gradient-to-br from-orange-50 via-amber-50 to-green-50 bg-chef-pattern">
       {/* Floating decorative elements */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
         <div className="absolute top-20 left-20 w-32 h-32 bg-primary-200 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-float"></div>
@@ -121,15 +123,18 @@ const Login = () => {
         <div className="absolute bottom-20 left-40 w-40 h-40 bg-yellow-200 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-float" style={{animationDelay: '4s'}}></div>
       </div>
 
-      <div className="relative w-full max-w-md">
+      <div className="flex items-center justify-center min-h-screen p-4">
+        <div className="relative w-full max-w-md">
         {/* Main Login Card */}
         <div className="chef-card rounded-3xl p-8 shadow-2xl border border-white/30 backdrop-blur-xl">
-          {/* Header with Chef Icon */}
+          {/* Header with Chef Logo */}
           <div className="text-center mb-8">
-            <div className="inline-flex items-center justify-center w-20 h-20 bg-chef-gradient rounded-full mb-4 shadow-lg">
-              <svg className="w-10 h-10 text-white" fill="currentColor" viewBox="0 0 24 24">
-                <path d="M12.5 2C13.9 2 15 3.1 15 4.5C15 5.9 13.9 7 12.5 7S10 5.9 10 4.5C10 3.1 11.1 2 12.5 2M20 7C20 8.11 19.11 9 18 9S16 8.11 16 7 16.89 5 18 5 20 5.89 20 7M8 7C8 8.11 7.11 9 6 9S4 8.11 4 7 4.89 5 6 5 8 5.89 8 7M18 11C18.7 11 19.37 11.13 20 11.35V20C20 21.11 19.11 22 18 22H6C4.89 22 4 21.11 4 20V11.35C4.63 11.13 5.3 11 6 11H18Z"/>
-              </svg>
+            <div className="inline-flex items-center justify-center w-20 h-20 bg-white rounded-full mb-4 shadow-lg border border-gray-100">
+              <img 
+                src={ImhotepChefLogo} 
+                alt="ImhotepChef Logo" 
+                className="w-14 h-14 object-contain"
+              />
             </div>
             <h1 className="text-3xl font-bold font-chef text-gray-800 mb-2">
               Welcome Back, Chef!
@@ -296,7 +301,9 @@ const Login = () => {
             🍳 Where AI meets culinary excellence 🍳
           </p>
         </div>
+        </div>
       </div>
+      <Footer />
     </div>
   );
 };

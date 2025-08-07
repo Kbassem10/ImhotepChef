@@ -2,6 +2,8 @@ import { useState, useEffect } from 'react';
 import { useAuth } from '../../contexts/AuthContext';
 import { Link, useLocation } from 'react-router-dom';
 import RecipeCount from './RecipeCount';
+import InstallButton from '../pwa/InstallButton';
+import ImhotepChefLogo from '../../assets/ImhotepChef.png';
 
 const Navbar = ({ onToggle }) => {
   const { user, logout } = useAuth();
@@ -94,10 +96,12 @@ const Navbar = ({ onToggle }) => {
               {/* Logo/Brand Section */}
               <div className="mb-8 pt-12">
                 <div className="flex items-center justify-center mb-4">
-                  <div className="w-16 h-16 bg-chef-gradient rounded-2xl shadow-lg flex items-center justify-center">
-                    <svg className="w-8 h-8 text-white" fill="currentColor" viewBox="0 0 24 24">
-                      <path d="M12.5 2C13.9 2 15 3.1 15 4.5C15 5.9 13.9 7 12.5 7S10 5.9 10 4.5C10 3.1 11.1 2 12.5 2M20 7C20 8.11 19.11 9 18 9S16 8.11 16 7 16.89 5 18 5 20 5.89 20 7M8 7C8 8.11 7.11 9 6 9S4 8.11 4 7 4.89 5 6 5 8 5.89 8 7M18 11C18.7 11 19.37 11.13 20 11.35V20C20 21.11 19.11 22 18 22H6C4.89 22 4 21.11 4 20V11.35C4.63 11.13 5.3 11 6 11H18Z"/>
-                    </svg>
+                  <div className="w-16 h-16 bg-white rounded-2xl shadow-lg flex items-center justify-center border border-gray-100">
+                    <img 
+                      src={ImhotepChefLogo} 
+                      alt="ImhotepChef Logo" 
+                      className="w-12 h-12 object-contain"
+                    />
                   </div>
                 </div>
                 <h2 className="text-2xl font-bold font-chef text-gray-800 text-center">
@@ -241,7 +245,7 @@ const Navbar = ({ onToggle }) => {
 
             {/* Fixed Bottom Section - Logout Button and Footer */}
             <div className="flex-shrink-0 border-t border-gray-200/50 p-6 bg-gradient-to-t from-white/95 to-transparent">
-              <button 
+              <button
                 onClick={handleLogout}
                 className="w-full group flex items-center p-4 rounded-2xl text-gray-700 hover:bg-red-50 hover:text-red-600 hover:shadow-md transition-all duration-300 hover:scale-105 mb-4"
               >
@@ -252,6 +256,11 @@ const Navbar = ({ onToggle }) => {
                 </div>
                 <span className="font-semibold">Logout</span>
               </button>
+
+              {/* Install App Button */}
+              <div className="mb-4">
+                <InstallButton className="w-full" />
+              </div>
 
               {/* Footer */}
               <div className="text-center">

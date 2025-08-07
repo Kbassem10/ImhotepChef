@@ -16,4 +16,17 @@ export default defineConfig({
       },
     },
   },
+  build: {
+    rollupOptions: {
+      external: [],
+      output: {
+        manualChunks: {
+          vendor: ['react', 'react-dom', 'react-router-dom'],
+          auth: ['axios'],
+        },
+      },
+    },
+  },
+  // Ensure service worker and manifest are copied correctly
+  publicDir: 'public',
 })

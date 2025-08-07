@@ -2,6 +2,8 @@ import { useState } from 'react';
 import { useAuth } from '../../contexts/AuthContext';
 import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import Footer from '../common/Footer';
+import ImhotepChefLogo from '../../assets/ImhotepChef.png';
 
 const Register = () => {
   const [formData, setFormData] = useState({
@@ -97,7 +99,7 @@ const Register = () => {
 
   if (success) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-green-50 via-blue-50 to-purple-50 bg-chef-pattern flex items-center justify-center p-4">
+      <div className="min-h-screen bg-gradient-to-br from-green-50 via-blue-50 to-purple-50 bg-chef-pattern">
         {/* Floating decorative elements */}
         <div className="absolute inset-0 overflow-hidden pointer-events-none">
           <div className="absolute top-20 left-20 w-32 h-32 bg-green-200 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-float"></div>
@@ -105,36 +107,39 @@ const Register = () => {
           <div className="absolute bottom-20 left-40 w-40 h-40 bg-purple-200 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-float" style={{animationDelay: '4s'}}></div>
         </div>
 
-        <div className="relative w-full max-w-md">
-          <div className="chef-card rounded-3xl p-8 shadow-2xl border border-white/30 backdrop-blur-xl text-center">
-            {/* Success Icon */}
-            <div className="inline-flex items-center justify-center w-20 h-20 bg-green-500 rounded-full mb-6 shadow-lg">
-              <svg className="w-10 h-10 text-white" fill="currentColor" viewBox="0 0 24 24">
-                <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
-              </svg>
-            </div>
+        <div className="flex items-center justify-center min-h-screen p-4">
+          <div className="relative w-full max-w-md">
+            <div className="chef-card rounded-3xl p-8 shadow-2xl border border-white/30 backdrop-blur-xl text-center">
+              {/* Success Icon */}
+              <div className="inline-flex items-center justify-center w-20 h-20 bg-green-500 rounded-full mb-6 shadow-lg">
+                <svg className="w-10 h-10 text-white" fill="currentColor" viewBox="0 0 24 24">
+                  <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                </svg>
+              </div>
 
-            <h2 className="text-3xl font-bold font-chef text-gray-800 mb-4">
-              Welcome to the Kitchen!
-            </h2>
-            <p className="text-gray-600 font-medium mb-8">
-              Your culinary journey begins now! Please check your email and click the verification link to activate your account before logging in.
-            </p>
-            
-            <Link 
-              to="/login" 
-              className="chef-button inline-block text-center no-underline"
-            >
-              Start Cooking
-            </Link>
+              <h2 className="text-3xl font-bold font-chef text-gray-800 mb-4">
+                Welcome to the Kitchen!
+              </h2>
+              <p className="text-gray-600 font-medium mb-8">
+                Your culinary journey begins now! Please check your email and click the verification link to activate your account before logging in.
+              </p>
+              
+              <Link 
+                to="/login" 
+                className="chef-button inline-block text-center no-underline"
+              >
+                Start Cooking
+              </Link>
+            </div>
           </div>
         </div>
+        <Footer />
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-green-50 via-blue-50 to-purple-50 bg-chef-pattern flex items-center justify-center p-4">
+    <div className="min-h-screen bg-gradient-to-br from-green-50 via-blue-50 to-purple-50 bg-chef-pattern">
       {/* Floating decorative elements */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
         <div className="absolute top-20 left-20 w-32 h-32 bg-green-200 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-float"></div>
@@ -142,15 +147,18 @@ const Register = () => {
         <div className="absolute bottom-20 left-40 w-40 h-40 bg-purple-200 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-float" style={{animationDelay: '4s'}}></div>
       </div>
 
-      <div className="relative w-full max-w-md">
+      <div className="flex items-center justify-center min-h-screen p-4">
+        <div className="relative w-full max-w-md">
         {/* Main Register Card */}
         <div className="chef-card rounded-3xl p-8 shadow-2xl border border-white/30 backdrop-blur-xl">
           {/* Header with Chef Icon */}
           <div className="text-center mb-8">
-            <div className="inline-flex items-center justify-center w-20 h-20 bg-chef-gradient rounded-full mb-4 shadow-lg">
-              <svg className="w-10 h-10 text-white" fill="currentColor" viewBox="0 0 24 24">
-                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
-              </svg>
+            <div className="inline-flex items-center justify-center w-20 h-20 bg-white rounded-full mb-4 shadow-lg border border-gray-100">
+              <img 
+                src={ImhotepChefLogo} 
+                alt="ImhotepChef Logo" 
+                className="w-14 h-14 object-contain"
+              />
             </div>
             <h1 className="text-3xl font-bold font-chef text-gray-800 mb-2">
               Join Our Kitchen!
@@ -335,7 +343,9 @@ const Register = () => {
             👨‍🍳 Join thousands of chefs using AI to create amazing recipes 👩‍🍳
           </p>
         </div>
+        </div>
       </div>
+      <Footer />
     </div>
   );
 };

@@ -4,6 +4,8 @@ import IngredientsList from './components/IngredientsList';
 import axios from 'axios';
 import ImhotepRecipe from './components/ImhotepRecipe';
 import RecipeCount from '../common/RecipeCount';
+import Footer from '../common/Footer';
+import ImhotepChefLogo from '../../assets/ImhotepChef.png';
 
 const Dashboard = () => {
     const { user } = useAuth();
@@ -90,12 +92,14 @@ const Dashboard = () => {
             <div className="relative z-10 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8">
                 {/* Welcome Section */}
                 <div className="chef-card rounded-3xl p-6 sm:p-8 lg:p-12 shadow-2xl border border-white/30 backdrop-blur-xl text-center">
-                    {/* Header with Chef Icon */}
+                    {/* Header with Chef Logo */}
                     <div className="flex flex-col items-center mb-8">
-                        <div className="w-20 h-20 bg-chef-gradient rounded-full mb-6 shadow-lg flex items-center justify-center">
-                            <svg className="w-10 h-10 text-white" fill="currentColor" viewBox="0 0 24 24">
-                                <path d="M12.5 2C13.9 2 15 3.1 15 4.5C15 5.9 13.9 7 12.5 7S10 5.9 10 4.5C10 3.1 11.1 2 12.5 2M20 7C20 8.11 19.11 9 18 9S16 8.11 16 7 16.89 5 18 5 20 5.89 20 7M8 7C8 8.11 7.11 9 6 9S4 8.11 4 7 4.89 5 6 5 8 5.89 8 7M18 11C18.7 11 19.37 11.13 20 11.35V20C20 21.11 19.11 22 18 22H6C4.89 22 4 21.11 4 20V11.35C4.63 11.13 5.3 11 6 11H18Z"/>
-                            </svg>
+                        <div className="w-20 h-20 bg-white rounded-full mb-6 shadow-lg flex items-center justify-center border border-gray-100">
+                            <img 
+                                src={ImhotepChefLogo} 
+                                alt="ImhotepChef Logo" 
+                                className="w-14 h-14 object-contain"
+                            />
                         </div>
                         
                         <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold font-chef text-gray-800 mb-4">
@@ -305,6 +309,7 @@ const Dashboard = () => {
                     </div>
                 )}
             </div>
+            <Footer />
         </div>
     );
 };
