@@ -9,7 +9,7 @@ from django.template.loader import render_to_string
 from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 from django.utils.encoding import force_bytes, force_str
 from django.contrib.auth.tokens import default_token_generator
-from ImhotepChef.settings import SITE_DOMAIN
+from ImhotepChef.settings import SITE_DOMAIN, frontend_url
 from django.contrib.auth.password_validation import validate_password
 from django.core.exceptions import ValidationError
 
@@ -87,12 +87,12 @@ def update_profile(request):
                         context = {
                             'user': user,
                             'domain': current_site,
-                            'frontend_url': 'http://localhost:3000',
+                            'frontend_url': frontend_url,
                             'uid': uid,
                             'token': token,
                             'new_email': email,
                             'new_email_encoded': new_email_encoded,
-                            'verification_url': f'http://localhost:3000/verify-email-change/{uid}/{token}/{new_email_encoded}'
+                            'verification_url': f'{frontend_url}/verify-email-change/{uid}/{token}/{new_email_encoded}'
                         }
                         
                         message = render_to_string('activate_mail_change_send.html', context)

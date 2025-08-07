@@ -10,7 +10,7 @@ from django.utils.http import urlsafe_base64_encode
 from django.utils.encoding import force_bytes
 from django.template.loader import render_to_string
 from django.contrib.auth.tokens import default_token_generator
-from ImhotepChef.settings import SITE_DOMAIN
+from ImhotepChef.settings import SITE_DOMAIN, frontend_url
 from django.views.decorators.csrf import csrf_exempt
 
 #the login route
@@ -70,6 +70,7 @@ def login_view(request):
                         'domain': current_site,
                         'uid': urlsafe_base64_encode(force_bytes(user.pk)),
                         'token': default_token_generator.make_token(user),
+                        'frontend_url': frontend_url
                     })
                     send_mail(mail_subject, message, 'imhoteptech1@gmail.com', [user.email], html_message=message)
                 except Exception as email_error:

@@ -27,13 +27,22 @@ SECRET_KEY = config('SECRET_KEY', default='django-insecure-)tk5u0)=848cnms7ignn(
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = config('DEBUG', default=True, cast=bool)
 
-ALLOWED_HOSTS = ['localhost', '127.0.0.1', '0.0.0.0', 'backend']
+ALLOWED_HOSTS = [
+    'localhost',
+    '127.0.0.1',
+    '0.0.0.0',
+    'backend',
+    'imhotepchef.pythonanywhere.com',
+    ]
 
 if DEBUG:
     # Add this to your settings
     SITE_DOMAIN = 'http://127.0.0.1:8000'
 else:
-    SITE_DOMAIN = 'https://imhotepsmartclinic.pythonanywhere.com' 
+    SITE_DOMAIN = 'https://imhotepchef.pythonanywhere.com' 
+
+if DEBUG:
+    CORS_ALLOW_ALL_ORIGINS = True
 
 if DEBUG == False:
     # Security settings - keep these as they are
@@ -230,19 +239,24 @@ STATIC_URL = 'static/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-# CORS settings for development
-CORS_ALLOWED_ORIGINS = [
+CSRF_TRUSTED_ORIGINS = [
     "http://localhost:3000",
     "http://127.0.0.1:3000",
-    "http://localhost:3001",  # Add if React runs on different port
-    "http://127.0.0.1:3001",
+    "https://yourfrontend.vercel.app",
+    "https://imhotepchef.pythonanywhere.com",
 ]
-
-CORS_ALLOW_CREDENTIALS = True
 
 # Allow all origins during development (less secure, only for dev)
 if DEBUG:
     CORS_ALLOW_ALL_ORIGINS = True
+
+# CORS settings for development
+CORS_ALLOWED_ORIGINS = [
+    "http://localhost:3000",
+    "http://127.0.0.1:3000",
+    "https://yourfrontend.vercel.app",
+    "https://imhotepchef.pythonanywhere.com",
+]
 
 # Add logging configuration
 LOGGING = {
@@ -282,7 +296,4 @@ SOCIALACCOUNT_PROVIDERS = {
     }
 }
 
-CSRF_TRUSTED_ORIGINS = [
-    "http://localhost:3000",
-    "http://127.0.0.1:3000",
-]
+frontend_url = "http://localhost:3000" if DEBUG else "https://imhotepchef.vercel.app"

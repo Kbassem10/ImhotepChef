@@ -8,7 +8,7 @@ from rest_framework.response import Response
 from rest_framework_simplejwt.tokens import RefreshToken
 import requests
 from django.conf import settings
-from ImhotepChef.settings import SITE_DOMAIN, GOOGLE_OAUTH2_CLIENT_ID, GOOGLE_OAUTH2_CLIENT_SECRET
+from ImhotepChef.settings import SITE_DOMAIN, GOOGLE_OAUTH2_CLIENT_ID, GOOGLE_OAUTH2_CLIENT_SECRET, frontend_url
 from decouple import config
 
 @api_view(['GET'])
@@ -143,8 +143,6 @@ def google_callback(request):
     """Handles the callback from Google OAuth2 - redirects to frontend with code"""
     code = request.GET.get('code')
     error = request.GET.get('error')
-    
-    frontend_url = "http://localhost:3000"
     
     if error:
         return redirect(f"{frontend_url}/login?error=google_auth_cancelled")

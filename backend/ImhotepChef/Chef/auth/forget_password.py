@@ -5,7 +5,7 @@ from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 from django.utils.encoding import force_bytes, force_str
 from django.template.loader import render_to_string
 from django.contrib.auth.forms import PasswordResetForm, SetPasswordForm
-from ImhotepChef.settings import SITE_DOMAIN
+from ImhotepChef.settings import SITE_DOMAIN, frontend_url
 from rest_framework import status
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import AllowAny
@@ -123,7 +123,7 @@ def password_reset_request(request):
             context = {
                 'user': user,
                 'domain': current_site,
-                'frontend_url': 'http://localhost:3000',  # Your React app URL
+                'frontend_url': frontend_url,  # Your React app URL
                 'uid': urlsafe_base64_encode(force_bytes(user.pk)),
                 'token': default_token_generator.make_token(user),
             }

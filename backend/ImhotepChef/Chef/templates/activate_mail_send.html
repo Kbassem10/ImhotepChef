@@ -319,7 +319,7 @@
         <p>To complete your account setup and start your culinary journey, please verify your email address by clicking the button below:</p>
         
         <div class="button-container">
-            <a href="http://localhost:3000/verify-email/{{ uid }}/{{ token }}/" class="button">
+            <a href="{{ frontend_url }}/verify-email/{{ uid }}/{{ token }}/" class="button">
                 🍳 Verify Email Address
             </a>
         </div>
@@ -327,7 +327,7 @@
         <p>If the button doesn't work, you can copy and paste this link into your browser:</p>
         <div class="link-fallback">
             <div class="link-text">
-                http://localhost:3000/verify-email/{{ uid }}/{{ token }}/
+                {{ frontend_url }}/verify-email/{{ uid }}/{{ token }}/
             </div>
         </div>
         
