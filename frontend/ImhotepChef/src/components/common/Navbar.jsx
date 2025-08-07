@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { useAuth } from '../../contexts/AuthContext';
 import { Link, useLocation } from 'react-router-dom';
 import RecipeCount from './RecipeCount';
+import InstallButton from '../pwa/InstallButton';
 import ImhotepChefLogo from '../../assets/ImhotepChef.png';
 
 const Navbar = ({ onToggle }) => {
@@ -244,7 +245,7 @@ const Navbar = ({ onToggle }) => {
 
             {/* Fixed Bottom Section - Logout Button and Footer */}
             <div className="flex-shrink-0 border-t border-gray-200/50 p-6 bg-gradient-to-t from-white/95 to-transparent">
-              <button 
+              <button
                 onClick={handleLogout}
                 className="w-full group flex items-center p-4 rounded-2xl text-gray-700 hover:bg-red-50 hover:text-red-600 hover:shadow-md transition-all duration-300 hover:scale-105 mb-4"
               >
@@ -255,6 +256,11 @@ const Navbar = ({ onToggle }) => {
                 </div>
                 <span className="font-semibold">Logout</span>
               </button>
+
+              {/* Install App Button */}
+              <div className="mb-4">
+                <InstallButton className="w-full" />
+              </div>
 
               {/* Footer */}
               <div className="text-center">
