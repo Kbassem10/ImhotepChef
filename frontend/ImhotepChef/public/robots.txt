@@ -12,4 +12,4 @@ Disallow: /verify-email-change/
 Disallow: /auth/google/callback
 Disallow: /reset-password
 
-Sitemap: https://your-domain.com/sitemap.xml
+Sitemap: https://imhotep-chef.vercel.app/sitemap.xml
