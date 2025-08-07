@@ -12,11 +12,6 @@ function LandingPage() {
       description: "Get personalized recipes based on your available ingredients and dietary preferences"
     },
     {
-      icon: "📱",
-      title: "Smart Ingredient Scanner",
-      description: "Scan ingredients from your kitchen and get instant recipe suggestions"
-    },
-    {
       icon: "📚",
       title: "Recipe History & Management",
       description: "Save, organize, and revisit all your favorite AI-generated recipes"
@@ -31,11 +26,6 @@ function LandingPage() {
       title: "Quick & Easy Cooking",
       description: "Get step-by-step instructions and cooking tips for perfect results every time"
     },
-    {
-      icon: "🍽️",
-      title: "Meal Planning",
-      description: "Plan your weekly meals with AI assistance and smart grocery lists"
-    }
   ];
 
   // Auto-rotate features every 4 seconds
@@ -78,7 +68,7 @@ function LandingPage() {
               
               <p className="text-lg text-gray-600 mb-12 max-w-3xl mx-auto leading-relaxed">
                 Discover the future of cooking with our intelligent recipe generator. Whether you're a beginner or a master chef, 
-                ImhotepChef helps you create amazing meals from whatever ingredients you have at home.
+                Imhotep Chef helps you create amazing meals from whatever ingredients you have at home.
               </p>
 
               {/* CTA Buttons */}
@@ -106,7 +96,7 @@ function LandingPage() {
           <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl">
             <div className="text-center mb-16">
               <h2 className="text-4xl lg:text-5xl font-bold text-gray-900 mb-6">
-                Why Choose <span className="text-orange-600">ImhotepChef</span>?
+                Why Choose <span className="text-orange-600">Imhotep Chef</span>?
               </h2>
               <p className="text-xl text-gray-600 max-w-3xl mx-auto">
                 Experience the power of AI-driven cooking with features designed to make your culinary journey exciting and effortless.
@@ -167,7 +157,7 @@ function LandingPage() {
           <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl">
             <div className="text-center mb-16">
               <h2 className="text-4xl lg:text-5xl font-bold text-gray-900 mb-6">
-                How <span className="text-orange-600">ImhotepChef</span> Works
+                How <span className="text-orange-600">Imhotep Chef</span> Works
               </h2>
               <p className="text-xl text-gray-600 max-w-3xl mx-auto">
                 From ingredients to delicious meals in just three simple steps
@@ -220,7 +210,7 @@ function LandingPage() {
                 Transform Your Cooking Experience
               </h2>
               <p className="text-xl opacity-90 max-w-3xl mx-auto">
-                Join thousands of home cooks who have revolutionized their kitchen experience with ImhotepChef
+                Join thousands of home cooks who have revolutionized their kitchen experience with Imhotep Chef
               </p>
             </div>
 
