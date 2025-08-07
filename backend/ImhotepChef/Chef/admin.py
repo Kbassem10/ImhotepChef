@@ -20,9 +20,6 @@ class UserAdmin(BaseUserAdmin):
         ('Email Verification', {
             'fields': ('email_verify',)
         }),
-        ('Recipe Statistics', {
-            'fields': ('recipe_count_this_month',)
-        }),
     )
     
     # Add custom fields to the user creation form
