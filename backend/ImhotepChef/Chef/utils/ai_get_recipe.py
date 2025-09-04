@@ -101,20 +101,16 @@ IMPORTANT: Keep additional ingredients to a minimum (maximum 5 items). Only incl
                 raise ValueError("Invalid response structure from Gemini API")
             
         except json.JSONDecodeError as e:
-            print(f"JSON parsing error with API key {key_index+1}: {str(e)}")
-            error_message = f"Failed to parse AI response: {str(e)}"
+            print(f"JSON parsing error with API key {key_index+1}")
             continue
             
         except Exception as e:
-            print(f"Error with API key {key_index+1}: {str(e)}")
-            error_message = str(e)
+            print(f"Error with API key {key_index+1}")
             continue
     
-    # If we get here, all keys failed
-    if not error_message:
-        error_message = "All API keys failed. Please check the Gemini API configuration."
+    error_message = "All API keys failed. Please check the Gemini API configuration."
     
-    print(f"All API keys failed: {error_message}")
+    print(f"All API keys failed")
     
     # Return fallback data
     fallback_data = {
