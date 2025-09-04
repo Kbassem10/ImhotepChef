@@ -89,9 +89,9 @@ def register_view(request):
                 last_name=last_name
             )
             user.save()
-        except Exception as create_error:
+        except Exception:
             return Response(
-                {'error': f'Failed to create user: {str(create_error)}'}, 
+                {'error': f'Failed to create user'}, 
                 status=status.HTTP_500_INTERNAL_SERVER_ERROR
             )
 
@@ -116,9 +116,9 @@ def register_view(request):
             status=status.HTTP_201_CREATED
         )
             
-    except Exception as e:
+    except Exception:
         return Response(
-            {'error': f'An error occurred during registration: {str(e)}'}, 
+            {'error': f'An error occurred during registration'}, 
             status=status.HTTP_500_INTERNAL_SERVER_ERROR
         )
 
@@ -162,8 +162,8 @@ def verify_email(request):
                 status=status.HTTP_400_BAD_REQUEST
             )
             
-    except Exception as e:
+    except Exception:
         return Response(
-            {'error': f'An error occurred during verification: {str(e)}'}, 
+            {'error': f'An error occurred during verification'}, 
             status=status.HTTP_500_INTERNAL_SERVER_ERROR
         )
