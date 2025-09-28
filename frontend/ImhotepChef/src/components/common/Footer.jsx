@@ -19,6 +19,14 @@ function Footer() {
                 <div className="flex justify-center space-x-6 text-sm text-gray-400">
                     <Link to="https://imhoteptech.vercel.app/" className="hover:text-orange-400 transition-colors">Imhotep Tech</Link>
                     <Link to="https://github.com/Imhotep-Tech/ImhotepChef" className="hover:text-orange-400 transition-colors" target="_blank" rel="noopener noreferrer">Source Code</Link>
+                    <Link
+                        to="https://tally.so/r/nPKe1P"
+                        className="hover:text-orange-400 transition-colors"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                    >
+                        Feedback & Bug Reports
+                    </Link>
                     <Link to="/download" className="hover:text-orange-400 transition-colors">Download</Link>
                 </div>
                 
